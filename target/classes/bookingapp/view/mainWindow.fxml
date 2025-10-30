@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<!--
+  File FXML cho màn hình chính, sau khi đăng nhập.
+  ĐÃ CẬP NHẬT: Thêm fx:id="welcomeLabel"
+-->
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="bookingapp.controller.MainWindowController"
+           styleClass="main-background"
+           stylesheets="@../assets/style.css">
+
+    <BorderPane>
+        <!-- Thanh "header" trên cùng -->
+        <top>
+            <HBox alignment="CENTER_LEFT" styleClass="header-pane">
+                <padding>
+                    <Insets top="10" right="20" bottom="10" left="20"/>
+                </padding>
+
+                <Text text="TRANG QUẢN LÝ" styleClass="logo-text" />
+                <Region HBox.hgrow="ALWAYS" /> <!-- Đẩy nút Đăng xuất sang phải -->
+
+                <Button fx:id="logoutButton" text="Đăng xuất" onAction="#handleLogout" styleClass="secondary-button" />
+            </HBox>
+        </top>
+
+        <!-- Nội dung chính ở giữa -->
+        <center>
+            <VBox alignment="CENTER" spacing="20">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <!--
+                  SỬA LỖI Ở ĐÂY:
+                  Chúng ta thêm fx:id="welcomeLabel" để nó khớp với Controller.
+                -->
+                <Label fx:id="welcomeLabel" styleClass="header-text" />
+
+                <Label text="Đây là nơi bạn sẽ thêm các chức năng đặt sân..." />
+            </VBox>
+        </center>
+    </BorderPane>
+
+</StackPane>
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<!-- Giao diện cho cửa sổ Pop-up Chi tiết Đặt Sân -->
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="bookingapp.controller.BookingDetailController"
+      styleClass="booking-detail-pane"
+      spacing="15" alignment="TOP_LEFT">
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <Label text="Chi tiết Đặt Sân" styleClass="page-title"/>
+
+    <Label fx:id="courtNameLabel" styleClass="header-text" text="Tên Sân: Sân 1"/>
+    <Label fx:id="priceLabel" styleClass="form-label" text="Giá: 80,000đ/giờ"/>
+
+    <Label text="Chọn ngày:" styleClass="form-label"/>
+    <DatePicker fx:id="datePicker" promptText="Chọn ngày đặt sân"/>
+
+    <Label text="Chọn giờ bắt đầu:" styleClass="form-label"/>
+    <ComboBox fx:id="timeSlotCombo" promptText="Chọn khung giờ"/>
+
+    <Label fx:id="messageLabel" styleClass="message-label"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="cancelButton" text="Hủy" styleClass="secondary-button" onAction="#handleCancel"/>
+        <Button fx:id="confirmButton" text="Xác nhận Đặt Sân" styleClass="button" onAction="#handleConfirmBooking"/>
+    </HBox>
+
+</VBox>

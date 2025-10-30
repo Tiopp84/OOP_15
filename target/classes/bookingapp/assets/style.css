@@ -1,0 +1,140 @@
+/* File CSS này phải nằm trong:
+  src/main/resources/bookingapp/assets/
+*/
+
+/* ========== STYLE CHUNG ========== */
+
+/* Style cho nền của Màn hình Đăng nhập (StackPane) */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+
+}
+
+/* Style cho nền của Màn hình Chính (BorderPane) */
+.root-main {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #F4F7FC; /* Nền trắng xám */
+}
+
+/* Nền cho màn hình Welcome */
+.welcome-background {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-image: url("images/welcome_bg.jpg"); /* <-- ẢNH 1 */
+    -fx-background-size: cover;
+}
+
+
+
+/* ========== STYLE CHO FORM (Đăng nhập / Đăng ký) ========== */
+
+/* Style cho "thẻ" (card) VBox màu trắng ở giữa */
+.login-form-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #B0C4DE;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 2); /* Đổ bóng */
+}
+
+/* Style cho logo "SÂN CẦU LÔNG" */
+.logo-text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-fill: #007BFF; /* Màu xanh dương */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.1, 2, 2);
+}
+
+/* Style cho tiêu đề (Đăng nhập, Đăng ký) */
+.header-text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333; /* Màu xám đậm */
+}
+
+/* Style cho nhãn (Tên đăng nhập, Mật khẩu) */
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555;
+    -fx-alignment: center-left; /* Căn trái */
+    -fx-pref-width: 300px;
+}
+
+/* Style cho ô nhập liệu */
+.text-field,
+.password-field {
+    -fx-font-size: 14px;
+    -fx-border-color: #B0C4DE;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+}
+
+/* Style khi trỏ chuột vào ô nhập liệu */
+.text-field:focused,
+.password-field:focused {
+    -fx-border-color: #007BFF;
+    -fx-border-width: 2px;
+}
+
+/* ========== STYLE CHO NÚT BẤM (Button) ========== */
+
+/* Style cho nút chính (Đăng nhập, Đăng ký) */
+.button {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-pref-width: 200px;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+
+/* Style cho nút phụ (Đăng ký, Quay về, Đăng xuất) */
+.secondary-button {
+    -fx-background-color: #E9ECEF; /* Nền xám nhạt */
+    -fx-text-fill: #333; /* Chữ xám đậm */
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-pref-width: 200px;
+    -fx-border-color: #B0C4DE;
+    -fx-border-width: 1px;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #D6DBDF; /* Xám đậm hơn */
+    -fx-cursor: hand;
+}
+
+/* ========== STYLE CHO MÀN HÌNH CHÍNH (Main Window) ========== */
+
+/* Thanh header (Top) của màn hình chính */
+.header-pane {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5); /* Đổ bóng nhẹ ở dưới */
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0 0 1px 0; /* Chỉ viền dưới */
+}
+
+/* Logo "HỆ THỐNG ĐẶT SÂN" */
+.main-logo-text {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-fill: #007BFF;
+}
+
+/* Tiêu đề chào mừng "Chào mừng, admin!" */
+.main-header-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
