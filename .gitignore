@@ -1,0 +1,32 @@
+# File này ra lệnh cho Git bỏ qua (ignore) các file và thư mục
+# được tạo tự động hoặc file chứa thông tin cá nhân.
+
+### IntelliJ IDEA ###
+# Bỏ qua thư mục cài đặt riêng của IntelliJ
+.idea/
+# Bỏ qua file module riêng của IntelliJ (sẽ được tạo lại từ pom.xml)
+*.iml
+
+### Maven ###
+# Bỏ qua thư mục build (thư mục "thành phẩm")
+target/
+# Bỏ qua các file build log
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+### Java ###
+# Bỏ qua các file log
+*.log
+
+### File Project Cụ thể (QUAN TRỌNG) ###
+# Bỏ qua file CSDL SQLite (file này được tạo khi chạy app)
+# Điều này ngăn xung đột CSDL giữa các thành viên
+badminton.db
+badminton.db-journal
+
+### Hệ điều hành (OS Files) ###
+# Bỏ qua file của macOS
+.DS_Store
+# Bỏ qua file thumbnail của Windows
+Thumbs.db

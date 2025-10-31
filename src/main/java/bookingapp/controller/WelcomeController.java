@@ -56,7 +56,7 @@ public class WelcomeController {
             Session.setCurrentUser(user);
 
             // BƯỚC 4: Chuyển sang màn hình chính
-            App.setRoot("mainWindow.fxml");
+            //App.setRoot("mainWindow.fxml");
 
         } else {
             // Đăng nhập thất bại

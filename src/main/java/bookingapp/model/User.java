@@ -1,9 +1,5 @@
 package bookingapp.model;
 
-/**
- * Lớp Model (POJO) đại diện cho một đối tượng User.
- * Nó tương ứng với bảng 'users' trong CSDL.
- */
 public class User {
 
     private int id;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class UserDAO {
 
-    /**
+    /*
      * Xác thực người dùng dựa trên username và password.
      * @param username Tên đăng nhập
      * @param password Mật khẩu

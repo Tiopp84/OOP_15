@@ -5,22 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Lớp Singleton để quản lý kết nối CSDL và tạo bảng.
- * Đây là "trái tim" của CSDL.
- */
+
 public class DatabaseManager {
 
-    // Tên file CSDL. Nó sẽ được tạo ở thư mục gốc của project.
     private static final String DATABASE_URL = "jdbc:sqlite:badminton.db";
 
     private static DatabaseManager instance;
 
-    /**
-     * Constructor (private) sẽ tự động tạo bảng.
-     */
     private DatabaseManager() {
-        // Tự động gọi hàm tạo bảng khi khởi tạo
         createTables();
     }
 
@@ -35,7 +27,7 @@ public class DatabaseManager {
         return instance;
     }
 
-    /**
+    /*
      * Hàm (public) này sẽ được các lớp DAO gọi để lấy một kết nối mới.
      * DAO sẽ chịu trách nhiệm đóng kết nối này.
      * @return Đối tượng Connection
@@ -81,10 +73,9 @@ public class DatabaseManager {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // Thực thi cả 3 câu lệnh
             stmt.execute(createUserTableSQL);
-            stmt.execute(createCourtsTableSQL);
-            stmt.execute(createBookingsTableSQL);
+//            stmt.execute(createCourtsTableSQL);
+//            stmt.execute(createBookingsTableSQL);
             System.out.println("Tables created successfully (if not existed).");
 
         } catch (SQLException e) {
