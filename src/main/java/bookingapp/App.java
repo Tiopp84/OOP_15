@@ -17,12 +17,11 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         try {
             DatabaseManager.getInstance();
-            System.out.println("Database initialized successfully."); // Log cho bạn
+            System.out.println("Database initialized successfully.");
         } catch (Exception e) {
             System.err.println("Failed to initialize database: " + e.getMessage());
             e.printStackTrace();
-            // (Tùy chọn) Bạn có thể hiển thị Alert lỗi ở đây nếu muốn
-            return; // Thoát nếu không thể khởi tạo CSDL
+            return;
         }
 
 
@@ -32,6 +31,11 @@ public class App extends Application {
 
         scene = new Scene(root, 600, 500);
 
+        stage.getIcons().add(
+                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
+        );
+
+
         try {
             String css = App.class.getResource("/bookingapp/assets/style.css").toExternalForm();
             scene.getStylesheets().add(css);
@@ -39,7 +43,7 @@ public class App extends Application {
             System.err.println("Warning: Could not load CSS file. " + e.getMessage());
         }
 
-        stage.setTitle("Ứng dụng Đặt sân Cầu lông");
+        stage.setTitle("Booking BADMINTON");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.setMinWidth(700);

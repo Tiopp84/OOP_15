@@ -1,9 +1,6 @@
 package bookingapp.model;
 
-/**
- * Lớp Model (POJO) đại diện cho một đối tượng Court (Sân).
- * Nó tương ứng với bảng 'courts' trong CSDL.
- */
+
 public class Court {
 
     private int id;
@@ -11,12 +8,7 @@ public class Court {
     private String location;
     private double pricePerHour;
 
-    /**
-     * Constructor (hàm dựng)
-     */
-    public Court(){
 
-    }
     public Court(int id, String name, String location, double pricePerHour) {
         this.id = id;
         this.name = name;
@@ -60,7 +52,6 @@ public class Court {
         this.pricePerHour = pricePerHour;
     }
 
-    // Hàm toString() để debug (tùy chọn)
     @Override
     public String toString() {
         return "Court{" +

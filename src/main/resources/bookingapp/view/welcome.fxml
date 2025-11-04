@@ -15,18 +15,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<!--
-  StackPane là gốc, để chúng ta có thể đặt ảnh nền (bằng CSS)
-  1. Liên kết Controller: fx:controller="bookingapp.controller.WelcomeController"
-  2. Liên kết CSS: stylesheets="@../assets/style.css"
-     (Dấu @../ nghĩa là "đi lùi 1 cấp, rồi vào thư mục assets")
--->
 <StackPane xmlns:fx="http://javafx.com/fxml/1"
            xmlns="http://javafx.com/javafx/21"
            fx:controller="bookingapp.controller.WelcomeController"
 
-           styleClass="welcome-background"
-           stylesheets="@../assets/style.css">
+           styleClass="welcome-background">
+
 
     <!-- Khung VBox màu trắng chứa form đăng nhập -->
     <VBox alignment="TOP_CENTER"
