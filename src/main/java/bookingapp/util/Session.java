@@ -1,5 +1,6 @@
 package bookingapp.util;
 
+import bookingapp.model.Admin;
 import bookingapp.model.User;
 
 /**
@@ -11,6 +12,7 @@ public class Session {
 
     // Biến static để lưu trữ thông tin người dùng hiện tại
     private static User currentUser;
+    private static Admin currentAdmin;
 
     /**
      * Hàm này được gọi bởi WelcomeController khi đăng nhập thành công.
@@ -19,28 +21,22 @@ public class Session {
     public static void setCurrentUser(User user) {
         currentUser = user;
     }
+    public static void setCurrentAdmin(Admin admin){
+        currentAdmin = admin;
+    }
 
-    /**
-     * Hàm này được gọi bởi bất kỳ màn hình nào cần biết ai đang đăng nhập.
-     * @return Đối tượng User hiện tại, hoặc null nếu chưa đăng nhập.
-     */
     public static User getCurrentUser() {
         return currentUser;
     }
+    public static Admin getCurrentAdmin(){
+        return currentAdmin;
+    }
 
-    /**
-     * Hàm này được gọi bởi MainWindowController khi người dùng đăng xuất.
-     */
+
     public static void clearSession() {
         currentUser = null;
+        currentAdmin = null;
     }
 
-    /**
-     * Kiểm tra xem có ai đang đăng nhập không.
-     * @return true nếu đã đăng nhập, false nếu chưa.
-     */
-    public static boolean isLoggedIn() {
-        return currentUser != null;
-    }
 }
 

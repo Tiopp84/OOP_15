@@ -2,6 +2,8 @@ package bookingapp.controller;
 
 import bookingapp.App;
 import bookingapp.dao.UserDAO;
+import bookingapp.dao.AdminDAO;
+import bookingapp.model.Admin;
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
@@ -9,10 +11,6 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 
-/**
- * Controller cho welcome.fxml.
- * ĐÃ CẬP NHẬT để sử dụng CSDL.
- */
 public class WelcomeController {
 
     @FXML
@@ -22,20 +20,17 @@ public class WelcomeController {
     @FXML
     private Button loginButton;
     @FXML
-    private Button registerButton; // Nút Đăng ký
+    private Button registerButton;
 
-    // Khởi tạo DAO để tái sử dụng
     private UserDAO userDAO;
+    private  AdminDAO adminDAO;
 
     public WelcomeController() {
-        // Khởi tạo UserDAO khi Controller được tạo
         this.userDAO = new UserDAO();
+        this.adminDAO = new AdminDAO();
     }
 
-    /**
-     * Xử lý khi nhấn nút "Đăng nhập".
-     * Sẽ gọi UserDAO để xác thực.
-     */
+
     @FXML
     private void handleLogin() throws IOException {
         String username = usernameField.getText();
@@ -46,40 +41,33 @@ public class WelcomeController {
             return;
         }
 
-        // BƯỚC 1: Gọi DAO để xác thực
         User user = userDAO.validateUser(username, password);
+        Admin admin = adminDAO.validateAdmin(username, password);
 
-        // BƯỚC 2: Kiểm tra kết quả
         if (user != null) {
-            // Đăng nhập thành công!
-            // BƯỚC 3: Lưu người dùng vào Session
             Session.setCurrentUser(user);
+            App.setRoot("usermainWindow.fxml");
 
-            // BƯỚC 4: Chuyển sang màn hình chính
-            //App.setRoot("mainWindow.fxml");
-
-        } else {
-            // Đăng nhập thất bại
+        }
+        else if(admin != null){
+            Session.setCurrentAdmin(admin);
+            App.setRoot("adminmainWindow.fxml");
+        }
+        else {
             showAlert(Alert.AlertType.ERROR, "Lỗi Đăng nhập", "Tên đăng nhập hoặc mật khẩu không chính xác!");
         }
     }
 
-    /**
-     * Xử lý khi nhấn nút "Đăng ký".
-     * Chuyển sang màn hình register.fxml.
-     */
+
     @FXML
     private void handleSwitchToRegister() throws IOException {
         App.setRoot("register.fxml");
     }
 
-    /**
-     * Hàm tiện ích (helper) để hiển thị Alert
-     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
-        alert.setHeaderText(null); // Không có tiêu đề phụ
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

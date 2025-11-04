@@ -47,6 +47,11 @@ public class DatabaseManager {
                 + " username TEXT NOT NULL UNIQUE,"
                 + " password TEXT NOT NULL"
                 + ");";
+        String createAdminTableSQL = "CREATE TABLE IF NOT EXISTS admins ("
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " username TEXT NOT NULL UNIQUE,"
+                + " password TEXT NOT NULL"
+                + ");";
 
         // Câu lệnh SQL để tạo bảng 'courts' (sân)
         String createCourtsTableSQL = "CREATE TABLE IF NOT EXISTS courts ("
@@ -74,6 +79,7 @@ public class DatabaseManager {
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(createUserTableSQL);
+            stmt.execute(createAdminTableSQL);
 //            stmt.execute(createCourtsTableSQL);
 //            stmt.execute(createBookingsTableSQL);
             System.out.println("Tables created successfully (if not existed).");

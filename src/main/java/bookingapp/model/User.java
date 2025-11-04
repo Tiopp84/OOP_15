@@ -3,19 +3,12 @@ package bookingapp.model;
 public class User {
 
     private int id;
-    private String username;
-    // Chúng ta không lưu password ở đây vì lý do bảo mật,
-    // trừ khi thực sự cần thiết cho việc gì đó khác ngoài đăng nhập.
+    private String username, password;
 
-    /**
-     * Constructor (hàm dựng)
-     */
-    public User(){
-
-    }
-    public User(int id, String username) {
+    public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
+        this.password = password;
     }
 
     // Các hàm Getters
@@ -36,6 +29,10 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
     }
 
     // Hàm toString() để debug (tùy chọn)

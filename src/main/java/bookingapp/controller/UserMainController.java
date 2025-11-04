@@ -10,10 +10,10 @@ import javafx.scene.control.Label; // Import Label
 import java.io.IOException;
 
 /**
- * Controller cho mainWindow.fxml.
+ * Controller cho usermainWindow.fxml.
  * ĐÃ CẬP NHẬT để sử dụng Session.
  */
-public class MainWindowController {
+public class UserMainController {
 
     @FXML
     private Label welcomeLabel; // Label để chào người dùng (fx:id="welcomeLabel")
