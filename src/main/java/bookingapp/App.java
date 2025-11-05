@@ -25,15 +25,18 @@ public class App extends Application {
         }
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/bookingapp/view/welcome.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                //App.class.getResource("/bookingapp/view/welcome.fxml")
+                App.class.getResource("/bookingapp/view/usermainWindow.fxml")
+        );
 
         Parent root = fxmlLoader.load();
 
         scene = new Scene(root, 600, 500);
 
-        stage.getIcons().add(
-                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
-        );
+//        stage.getIcons().add(
+//                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
+//        );
 
 
         try {

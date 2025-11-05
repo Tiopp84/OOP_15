@@ -10,46 +10,22 @@ import java.io.IOException;
 
 public class UserMainController {
 
-    // Khai báo các button từ FXML
-    @FXML private Button button_court1;
-    @FXML private Button button_court2;
-    @FXML private Button button_court3;
-    @FXML private Button button_court4;
+    @FXML private Button bt_court1;
+    @FXML private Button bt_court2;
+    @FXML private Button bt_court3;
+    @FXML private Button bt_court4;
+    @FXML private Button bt_logout;
 
 
     @FXML
-    public void initialize() throws IOException{
-        // Gắn sự kiện cho các sân
-        button_court1.setOnAction(e -> {
+    public void initialize(){
+        bt_logout.setOnAction(a -> {
             try {
-                datSan(1);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                App.setRoot("welcome.fxml");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        button_court2.setOnAction(e -> {
-            try {
-                datSan(2);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        button_court3.setOnAction(e -> {
-            try {
-                datSan(3);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        button_court4.setOnAction(e -> {
-            try {
-                datSan(4);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-
     }
 
     private void datSan(int soSan) throws IOException {
@@ -60,13 +36,6 @@ public class UserMainController {
         }
     }
 
-    private void handleLogout() {
-        try {
-            App.setRoot("welcome.fxml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /** Hàm tiện ích hiển thị thông báo */
     private void showAlert(String title, String message) {
