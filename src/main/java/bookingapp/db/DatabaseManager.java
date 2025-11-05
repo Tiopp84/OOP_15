@@ -37,25 +37,44 @@ public class DatabaseManager {
                 + " role TEXT NOT NULL"
                 + ");";
        // courts
-        String createCourtsTableSQL = "CREATE TABLE IF NOT EXISTS courts ("
-                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " name TEXT NOT NULL UNIQUE"
+        String createSanTableSQL = "CREATE TABLE IF NOT EXISTS San ("
+                + " MaSan INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " TenSan TEXT NOT NULL,"
+                + " MoTa TEXT,"
+                + " TrangThai TEXT DEFAULT 'HoatDong'"
                 + ");";
-
-        // courtDetails
-        String createCourtDetaolTableSQL = "CREATE TABLE IF NOT EXISTS courtdetails ("
-                ;
-        // Câu lệnh SQL để tạo bảng 'bookings' (lượt đặt)
-        String createBookingsTableSQL = "CREATE TABLE IF NOT EXISTS bookings ("
-                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " user_id INTEGER NOT NULL,"
-                + " court_id INTEGER NOT NULL,"
-                + " booking_date TEXT NOT NULL,"
-                + " start_time TEXT NOT NULL,"
-                + " end_time TEXT NOT NULL,"
-                + " total_price REAL NOT NULL,"
-                + " FOREIGN KEY (user_id) REFERENCES users (id),"
-                + " FOREIGN KEY (court_id) REFERENCES courts (id)"
+        // 3. Bảng Quy tắc Giá
+        String createBangGiaTableSQL = "CREATE TABLE IF NOT EXISTS BangGia ("
+                + " MaGia INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " NgayTrongTuan TEXT NOT NULL,"
+                + " ThoiGianBatDau TEXT NOT NULL,"  // Lưu dạng "HH:MM:SS"
+                + " ThoiGianKetThuc TEXT NOT NULL," // Lưu dạng "HH:MM:SS"
+                + " GiaMoiGio REAL NOT NULL"        // Dùng REAL cho số thập phân (tiền)
+                + ");";
+        // 4. Bảng Lịch Đặt (của khách)
+        String createLichDatTableSQL = "CREATE TABLE IF NOT EXISTS LichDat ("
+                + " MaDatLich INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " MaSan INTEGER NOT NULL,"
+                + " User_id INTEGER NOT NULL,"
+                + " Ngay TEXT NOT NULL,"             // Lưu dạng "YYYY-MM-DD"
+                + " ThoiGianBatDau TEXT NOT NULL,"
+                + " ThoiGianKetThuc TEXT NOT NULL,"
+                + " GiaLucDat REAL,"
+                + " TrangThaiThanhToan TEXT DEFAULT 'ChuaThanhToan',"
+                + " FOREIGN KEY (MaSan) REFERENCES San(MaSan),"
+                + " FOREIGN KEY (User_id) REFERENCES users(id),"
+                + " UNIQUE (MaSan, Ngay, ThoiGianBatDau)"
+                + ");";
+        // 5. Bảng Lịch Ngoại Lệ (Đóng/Sự kiện)
+        String createLichNgoaiLeTableSQL = "CREATE TABLE IF NOT EXISTS LichNgoaiLe ("
+                + " MaHoatDong INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " MaSan INTEGER NOT NULL,"
+                + " Ngay TEXT NOT NULL,"
+                + " ThoiGianBatDau TEXT NOT NULL,"
+                + " ThoiGianKetThuc TEXT NOT NULL,"
+                + " LoaiHoatDong TEXT NOT NULL," // ('Khoa', 'SuKien', 'BaoTri')
+                + " GhiChu TEXT,"
+                + " FOREIGN KEY (MaSan) REFERENCES San(MaSan)"
                 + ");";
 
         // Dùng try-with-resources để đảm bảo kết nối được đóng
@@ -63,8 +82,10 @@ public class DatabaseManager {
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(createUserTableSQL);
-            stmt.execute(createCourtsTableSQL);
-//            stmt.execute(createBookingsTableSQL);
+            stmt.execute(createSanTableSQL);
+            stmt.execute(createBangGiaTableSQL);
+            stmt.execute(createLichDatTableSQL);
+            stmt.execute(createLichNgoaiLeTableSQL);
             System.out.println("Tables created successfully (if not existed).");
 
         } catch (SQLException e) {
