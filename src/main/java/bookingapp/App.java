@@ -34,10 +34,9 @@ public class App extends Application {
 
         scene = new Scene(root, 600, 500);
 
-//        stage.getIcons().add(
-//                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
-//        );
-
+        stage.getIcons().add(
+                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
+        );
 
         try {
             String css = App.class.getResource("/bookingapp/assets/style.css").toExternalForm();
