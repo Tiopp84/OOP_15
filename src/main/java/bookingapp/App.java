@@ -17,16 +17,18 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         try {
             DatabaseManager.getInstance();
-            System.out.println("Database initialized successfully."); // Log cho bạn
+            System.out.println("Database initialized successfully.");
         } catch (Exception e) {
             System.err.println("Failed to initialize database: " + e.getMessage());
             e.printStackTrace();
-            // (Tùy chọn) Bạn có thể hiển thị Alert lỗi ở đây nếu muốn
-            return; // Thoát nếu không thể khởi tạo CSDL
+            return;
         }
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/bookingapp/view/welcome.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                //App.class.getResource("/bookingapp/view/welcome.fxml")
+                App.class.getResource("/bookingapp/view/usermainWindow.fxml")
+        );
 
         Parent root = fxmlLoader.load();
 
@@ -43,7 +45,7 @@ public class App extends Application {
             System.err.println("Warning: Could not load CSS file. " + e.getMessage());
         }
 
-        stage.setTitle("Ứng dụng Đặt sân Cầu lông");
+        stage.setTitle("Booking BADMINTON");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.setMinWidth(700);

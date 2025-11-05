@@ -1,55 +1,48 @@
 package bookingapp.controller;
 
 import bookingapp.App;
-import bookingapp.model.User;
-import bookingapp.util.Session; // Import Session
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label; // Import Label
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
-/**
- * Controller cho usermainWindow.fxml.
- * ĐÃ CẬP NHẬT để sử dụng Session.
- */
 public class UserMainController {
 
-    @FXML
-    private Label welcomeLabel; // Label để chào người dùng (fx:id="welcomeLabel")
-    @FXML
-    private Button logoutButton;
+    @FXML private Button bt_court1;
+    @FXML private Button bt_court2;
+    @FXML private Button bt_court3;
+    @FXML private Button bt_court4;
+    @FXML private Button bt_logout;
 
-    /**
-     * Hàm này được JavaFX tự động gọi
-     * sau khi file FXML được tải.
-     */
-    @FXML
-    public void initialize() {
-        // Lấy người dùng hiện tại từ Session
-        User currentUser = Session.getCurrentUser();
 
-        // Hiển thị lời chào
-        if (currentUser != null) {
-            welcomeLabel.setText("Chào mừng, " + currentUser.getUsername() + "!");
-        } else {
-            // Trường hợp này không nên xảy ra nếu logic đúng
-            welcomeLabel.setText("Chào mừng!");
+    @FXML
+    public void initialize(){
+        bt_logout.setOnAction(a -> {
+            try {
+                App.setRoot("welcome.fxml");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void datSan(int soSan) throws IOException {
+        try {
+            App.setRoot("welcome.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
-    /**
-     * Xử lý khi nhấn nút "Đăng xuất".
-     * Sẽ xóa Session và quay về màn hình welcome.
-     */
-    @FXML
-    private void handleLogout() throws IOException {
-        // Xóa người dùng khỏi Session
-        Session.setCurrentUser(null);
-
-        // Quay về màn hình đăng nhập
-        App.setRoot("welcome.fxml");
+    /** Hàm tiện ích hiển thị thông báo */
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
-
