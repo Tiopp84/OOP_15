@@ -4,11 +4,13 @@ public class User {
 
     private int id;
     private String username, password;
+    private String role;
 
-    public User(int id, String username, String password) {
+    public User(int id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     // Các hàm Getters
@@ -35,13 +37,11 @@ public class User {
         this.password = password;
     }
 
-    // Hàm toString() để debug (tùy chọn)
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                '}';
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public String getRole(){
+        return role;
     }
 }
 

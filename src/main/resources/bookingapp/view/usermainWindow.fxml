@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookingapp.controller.UserMainController">
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="122.0" style="-fx-background-color: #ECD00A;" styleClass="sidebar" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="179.0" style="-fx-background-color: #ECD00A;" styleClass="sidebar" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" text="Button" textAlignment="CENTER">
                <VBox.margin>
@@ -47,15 +46,15 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: #DAA00A;" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="251.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="182.0">
                <children>
-                  <Label styleClass="text-field" stylesheets="@../assets/style.css" text="Chào mừng" />
+                  <Label fx:id="Chaomung" styleClass="text-field" stylesheets="@../assets/style.css" />
                </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="66.0" prefWidth="303.0">
+            <VBox alignment="CENTER" prefHeight="66.0" prefWidth="424.0">
                <children>
                   <Label text="Ứng dụng đặt sân cầu lông">
                      <font>
@@ -64,12 +63,14 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="66.0" prefWidth="134.0" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </HBox>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="307.0" prefWidth="500.0" spacing="10.0" styleClass="vbox-san" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="334.0" prefWidth="473.0" spacing="10.0" styleClass="vbox-san" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="bt_court1" mnemonicParsing="false" styleClass="court-button" stylesheets="@../assets/style.css" text="SÂN 1">
                <VBox.margin>

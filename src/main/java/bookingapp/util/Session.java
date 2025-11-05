@@ -1,6 +1,6 @@
 package bookingapp.util;
 
-import bookingapp.model.Admin;
+
 import bookingapp.model.User;
 
 /**
@@ -12,7 +12,6 @@ public class Session {
 
     // Biến static để lưu trữ thông tin người dùng hiện tại
     private static User currentUser;
-    private static Admin currentAdmin;
 
     /**
      * Hàm này được gọi bởi WelcomeController khi đăng nhập thành công.
@@ -21,21 +20,16 @@ public class Session {
     public static void setCurrentUser(User user) {
         currentUser = user;
     }
-    public static void setCurrentAdmin(Admin admin){
-        currentAdmin = admin;
-    }
+
 
     public static User getCurrentUser() {
         return currentUser;
     }
-    public static Admin getCurrentAdmin(){
-        return currentAdmin;
-    }
+
 
 
     public static void clearSession() {
         currentUser = null;
-        currentAdmin = null;
     }
 
 }

@@ -22,7 +22,7 @@ public class UserDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+                User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
                 return user;
             }
         } catch (SQLException e) {
@@ -33,14 +33,15 @@ public class UserDAO {
         return null;
     }
 
-    public boolean addUser(String username, String password) {
-        String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
+    public boolean addUser(String username, String password, String role) {
+        String sql = "INSERT INTO users(username, password, role) VALUES(?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
+            pstmt.setString(3, role);
 
             int rowsAffected = pstmt.executeUpdate();// dung cho cac truy van khong tra ve du lieu
             // tra ve so luong dong bi thay doi trong csdl

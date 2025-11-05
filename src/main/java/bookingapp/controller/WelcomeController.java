@@ -2,8 +2,7 @@ package bookingapp.controller;
 
 import bookingapp.App;
 import bookingapp.dao.UserDAO;
-import bookingapp.dao.AdminDAO;
-import bookingapp.model.Admin;
+
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
@@ -23,11 +22,9 @@ public class WelcomeController {
     private Button registerButton;
 
     private UserDAO userDAO;
-    private  AdminDAO adminDAO;
 
     public WelcomeController() {
         this.userDAO = new UserDAO();
-        this.adminDAO = new AdminDAO();
     }
 
 
@@ -42,16 +39,16 @@ public class WelcomeController {
         }
 
         User user = userDAO.validateUser(username, password);
-        Admin admin = adminDAO.validateAdmin(username, password);
 
         if (user != null) {
-            Session.setCurrentUser(user);
-            App.setRoot("usermainWindow.fxml");
-
-        }
-        else if(admin != null){
-            Session.setCurrentAdmin(admin);
-            App.setRoot("adminmainWindow.fxml");
+            if(user.getRole().equals("user")){
+                Session.setCurrentUser(user);
+                App.setRoot("usermainWindow.fxml");
+            }
+            else{
+                Session.setCurrentUser(user);
+                App.setRoot("adminmainWindow.fxml");
+            }
         }
         else {
             showAlert(Alert.AlertType.ERROR, "Lỗi Đăng nhập", "Tên đăng nhập hoặc mật khẩu không chính xác!");

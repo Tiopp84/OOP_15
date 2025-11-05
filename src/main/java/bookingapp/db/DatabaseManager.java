@@ -16,10 +16,6 @@ public class DatabaseManager {
         createTables();
     }
 
-    /**
-     * Hàm để lấy đối tượng Singleton (thể hiện duy nhất).
-     * Đây là hàm mà App.java đã gọi.
-     */
     public static synchronized DatabaseManager getInstance() {
         if (instance == null) {
             instance = new DatabaseManager();
@@ -27,40 +23,28 @@ public class DatabaseManager {
         return instance;
     }
 
-    /*
-     * Hàm (public) này sẽ được các lớp DAO gọi để lấy một kết nối mới.
-     * DAO sẽ chịu trách nhiệm đóng kết nối này.
-     * @return Đối tượng Connection
-     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DATABASE_URL);
     }
 
-    /**
-     * Hàm (private) để tạo các bảng nếu chúng chưa tồn tại.
-     * Sẽ được gọi một lần duy nhất khi Singleton được tạo.
-     */
+
     private void createTables() {
-        // Câu lệnh SQL để tạo bảng 'users'
+        // users
         String createUserTableSQL = "CREATE TABLE IF NOT EXISTS users ("
                 + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + " username TEXT NOT NULL UNIQUE,"
-                + " password TEXT NOT NULL"
+                + " password TEXT NOT NULL,"
+                + " role TEXT NOT NULL"
                 + ");";
-        String createAdminTableSQL = "CREATE TABLE IF NOT EXISTS admins ("
-                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " username TEXT NOT NULL UNIQUE,"
-                + " password TEXT NOT NULL"
-                + ");";
-
-        // Câu lệnh SQL để tạo bảng 'courts' (sân)
+       // courts
         String createCourtsTableSQL = "CREATE TABLE IF NOT EXISTS courts ("
                 + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " name TEXT NOT NULL UNIQUE,"
-                + " location TEXT,"
-                + " price_per_hour REAL NOT NULL"
+                + " name TEXT NOT NULL UNIQUE"
                 + ");";
 
+        // courtDetails
+        String createCourtDetaolTableSQL = "CREATE TABLE IF NOT EXISTS courtdetails ("
+                ;
         // Câu lệnh SQL để tạo bảng 'bookings' (lượt đặt)
         String createBookingsTableSQL = "CREATE TABLE IF NOT EXISTS bookings ("
                 + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -79,8 +63,7 @@ public class DatabaseManager {
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(createUserTableSQL);
-            stmt.execute(createAdminTableSQL);
-//            stmt.execute(createCourtsTableSQL);
+            stmt.execute(createCourtsTableSQL);
 //            stmt.execute(createBookingsTableSQL);
             System.out.println("Tables created successfully (if not existed).");
 

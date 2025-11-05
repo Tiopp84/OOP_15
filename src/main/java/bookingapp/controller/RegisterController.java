@@ -58,7 +58,7 @@ public class RegisterController {
         }
 
         // 3. Gọi DAO để thêm người dùng
-        boolean success = userDAO.addUser(username, password);
+        boolean success = userDAO.addUser(username, password, "user");
 
         // 4. Kiểm tra kết quả từ CSDL
         if (success) {

@@ -26,8 +26,8 @@ public class App extends Application {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-                //App.class.getResource("/bookingapp/view/welcome.fxml")
-                App.class.getResource("/bookingapp/view/usermainWindow.fxml")
+                App.class.getResource("/bookingapp/view/welcome.fxml")
+                //App.class.getResource("/bookingapp/view/usermainWindow.fxml")
         );
 
         Parent root = fxmlLoader.load();

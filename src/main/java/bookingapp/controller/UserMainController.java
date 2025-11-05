@@ -1,10 +1,13 @@
 package bookingapp.controller;
 
 import bookingapp.App;
+import bookingapp.model.User;
+import bookingapp.util.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 
@@ -15,10 +18,14 @@ public class UserMainController {
     @FXML private Button bt_court3;
     @FXML private Button bt_court4;
     @FXML private Button bt_logout;
+    @FXML private Label Chaomung;
+    private User currentUser;
 
 
     @FXML
     public void initialize(){
+        currentUser = Session.getCurrentUser();
+        Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
         bt_logout.setOnAction(a -> {
             try {
                 App.setRoot("welcome.fxml");
