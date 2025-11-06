@@ -25,7 +25,8 @@ public class UserMainController {
     @FXML
     public void initialize(){
         currentUser = Session.getCurrentUser();
-        Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
+        if(currentUser != null) Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
+        else Chaomung.setText("Welcome!");
         bt_logout.setOnAction(a -> {
             try {
                 App.setRoot("welcome.fxml");
