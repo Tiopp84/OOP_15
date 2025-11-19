@@ -28,7 +28,7 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 //App.class.getResource("/bookingapp/view/welcome.fxml")
                 App.class.getResource("/bookingapp/view/user/mainLayout.fxml")
-                //App.class.getResource("/bookingapp/view/adminmainWindow.fxml")
+                //App.class.getResource("/bookingapp/view/admin/adminmainWindow.fxml")
 
         );
 
