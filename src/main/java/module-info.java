@@ -22,6 +22,8 @@ module bookingapp {
     opens bookingapp.model to javafx.fxml;
     opens bookingapp.db to javafx.fxml;
     opens bookingapp.util to javafx.fxml;
+    opens bookingapp.controller.admin to javafx.fxml;
+    opens bookingapp.controller.user to javafx.fxml;
     exports bookingapp;
 }
 

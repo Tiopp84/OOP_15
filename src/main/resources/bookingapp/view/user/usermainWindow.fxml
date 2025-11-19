@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookingapp.controller.UserMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookingapp.controller.user.UserMainController">
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="179.0" style="-fx-background-color: #ECD00A;" styleClass="sidebar" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="179.0" style="-fx-background-color: #ECD00A;" styleClass="sidebar" stylesheets="@../../assets/style.css" BorderPane.alignment="CENTER">
          <children>
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Button" textAlignment="CENTER">
                <VBox.margin>
@@ -35,7 +35,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="bt_logout" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="logout-button" stylesheets="@../assets/style.css" text="Đăng xuất">
+            <Button fx:id="bt_logout" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="logout-button" stylesheets="@../../assets/style.css" text="Đăng xuất">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -48,7 +48,7 @@
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="182.0">
                <children>
-                  <Label fx:id="Chaomung" styleClass="text-field" stylesheets="@../assets/style.css" />
+                  <Label fx:id="Chaomung" styleClass="text-field" stylesheets="@../../assets/style.css" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -70,9 +70,9 @@
       </HBox>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="334.0" prefWidth="473.0" spacing="10.0" styleClass="vbox-san" stylesheets="@../assets/style.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="334.0" prefWidth="473.0" spacing="10.0" styleClass="vbox-san" stylesheets="@../../assets/style.css" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="bt_court1" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../assets/style.css" text="SÂN 1" VBox.vgrow="ALWAYS">
+            <Button fx:id="bt_court1" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../../assets/style.css" text="SÂN 1" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="25.0" />
                </VBox.margin>
@@ -80,7 +80,7 @@
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </padding>
             </Button>
-            <Button fx:id="bt_court2" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../assets/style.css" text="SÂN 2" VBox.vgrow="ALWAYS">
+            <Button fx:id="bt_court2" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../../assets/style.css" text="SÂN 2" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="25.0" />
                </VBox.margin>
@@ -88,7 +88,7 @@
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </padding>
             </Button>
-            <Button fx:id="bt_court3" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../assets/style.css" text="SÂN 3" VBox.vgrow="ALWAYS">
+            <Button fx:id="bt_court3" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../../assets/style.css" text="SÂN 3" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="25.0" />
                </VBox.margin>
@@ -96,7 +96,7 @@
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </padding>
             </Button>
-            <Button fx:id="bt_court4" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../assets/style.css" text="SÂN 4" VBox.vgrow="ALWAYS">
+            <Button fx:id="bt_court4" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="vbox-san" stylesheets="@../../assets/style.css" text="SÂN 4" VBox.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </padding></Button>
