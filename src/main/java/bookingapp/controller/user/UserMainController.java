@@ -1,4 +1,4 @@
-package bookingapp.controller;
+package bookingapp.controller.user;
 
 import bookingapp.App;
 import bookingapp.model.User;

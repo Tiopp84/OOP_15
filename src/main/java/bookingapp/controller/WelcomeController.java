@@ -43,11 +43,11 @@ public class WelcomeController {
         if (user != null) {
             if(user.getRole().equals("user")){
                 Session.setCurrentUser(user);
-                App.setRoot("usermainWindow.fxml");
+                App.setRoot("user/usermainWindow.fxml");
             }
             else{
                 Session.setCurrentUser(user);
-                App.setRoot("adminmainWindow.fxml");
+                App.setRoot("admin/adminmainWindow.fxml");
             }
         }
         else {

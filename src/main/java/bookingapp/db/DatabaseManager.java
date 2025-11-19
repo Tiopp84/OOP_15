@@ -77,7 +77,6 @@ public class DatabaseManager {
                 + " FOREIGN KEY (MaSan) REFERENCES San(MaSan)"
                 + ");";
 
-        // Dùng try-with-resources để đảm bảo kết nối được đóng
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
