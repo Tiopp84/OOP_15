@@ -4,22 +4,25 @@ import bookingapp.App;
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 public class UserMainController {
 
-    @FXML private Button bt_court1;
-    @FXML private Button bt_court2;
-    @FXML private Button bt_court3;
-    @FXML private Button bt_court4;
+    @FXML private VBox contentArea;
+    @FXML private Button bt_pricedetail;
+    @FXML private Button bt_history;
+    @FXML private Button bt_info;
     @FXML private Button bt_logout;
     @FXML private Label Chaomung;
     private User currentUser;
+
 
 
     @FXML
@@ -27,6 +30,19 @@ public class UserMainController {
         currentUser = Session.getCurrentUser();
         if(currentUser != null) Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
         else Chaomung.setText("Welcome!");
+        loadContent("maincourt.fxml");
+
+        bt_pricedetail.setOnAction(e->{
+            loadContent("price_detail.fxml");
+        });
+        bt_history.setOnAction(e->{
+            loadContent("history_booking.fxml");
+        });
+        bt_info.setOnAction(e->{
+            loadContent("info.fxml");
+        });
+
+
         bt_logout.setOnAction(a -> {
             try {
                 App.setRoot("welcome.fxml");
@@ -36,10 +52,11 @@ public class UserMainController {
         });
     }
 
-    private void datSan(int soSan) throws IOException {
+    private void loadContent(String fxml) {
         try {
-            App.setRoot("welcome.fxml");
-        } catch (Exception e) {
+            VBox view = FXMLLoader.load(getClass().getResource("/bookingapp/view/user/" + fxml));
+            contentArea.getChildren().setAll(view);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
