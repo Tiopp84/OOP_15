@@ -12,6 +12,11 @@
     <left>
         <VBox alignment="TOP_CENTER" prefHeight="334.0" prefWidth="179.0" style="-fx-background-color: #ECD00A;" styleClass="sidebar" stylesheets="@../../assets/style.css" BorderPane.alignment="CENTER">
             <children>
+            <Button fx:id="bt_booking" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Đặt sân">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Button>
                 <Button fx:id="bt_pricedetail" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Xem bảng giá sân">
                     <VBox.margin>
                         <Insets bottom="10.0" />

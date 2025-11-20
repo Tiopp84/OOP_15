@@ -16,6 +16,7 @@ import java.io.IOException;
 public class UserMainController {
 
     @FXML private VBox contentArea;
+    @FXML private Button bt_booking;
     @FXML private Button bt_pricedetail;
     @FXML private Button bt_history;
     @FXML private Button bt_info;
@@ -40,6 +41,9 @@ public class UserMainController {
         });
         bt_info.setOnAction(e->{
             loadContent("info.fxml");
+        });
+        bt_booking.setOnAction(e->{
+            loadContent("maincourt.fxml");
         });
 
 
