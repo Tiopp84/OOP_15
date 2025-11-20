@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="12" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="bookingapp.controller.admin.BookingManagementController">
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="Quản lý lịch đặt"
+           style="-fx-font-size: 20px; -fx-font-weight: bold"/>
+
+    <TableView fx:id="table" prefHeight="350">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colUser" text="User ID" prefWidth="80"/>
+            <TableColumn fx:id="colCourt" text="Court ID" prefWidth="80"/>
+            <TableColumn fx:id="colDate" text="Ngày đặt" prefWidth="120"/>
+            <TableColumn fx:id="colStart" text="Bắt đầu" prefWidth="100"/>
+            <TableColumn fx:id="colEnd" text="Kết thúc" prefWidth="100"/>
+            <TableColumn fx:id="colPrice" text="Tổng tiền" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Xóa lịch" onAction="#handleDelete"/>
+        <Button text="Làm mới" onAction="#loadData"/>
+    </HBox>
+
+</VBox>
