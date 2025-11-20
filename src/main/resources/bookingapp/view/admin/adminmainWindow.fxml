@@ -44,4 +44,9 @@
         </VBox>
     </right>
 
+    <center>
+        <BorderPane fx:id="contentArea"/>
+    </center>
+
+
 </BorderPane>

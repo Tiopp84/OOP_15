@@ -1,7 +1,11 @@
 package bookingapp.controller.admin;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
+import java.io.IOException;
 
 public class AdminMainController {
 
@@ -9,8 +13,10 @@ public class AdminMainController {
     private ChoiceBox<String> choiceFunctions;
 
     @FXML
+    private BorderPane contentArea;
+
+    @FXML
     public void initialize() {
-        // Thêm 5 chức năng vào ChoiceBox khi mở màn hình
         choiceFunctions.getItems().addAll(
                 "Quản lý người dùng",
                 "Quản lý sân",
@@ -22,11 +28,24 @@ public class AdminMainController {
 
     @FXML
     private void handleFunctionSelect() {
-        // Mới chỉ test xem đã chọn được hay chưa
         String selected = choiceFunctions.getValue();
 
-        if (selected != null) {
-            System.out.println("Đã chọn chức năng: " + selected);
+        if (selected == null) return;
+
+        switch (selected) {
+            case "Quản lý người dùng":
+                loadView("/bookingapp/view/admin/userManagement.fxml");
+                break;
+            // các chức năng khác bạn load tương tự
+        }
+    }
+
+    private void loadView(String fxmlPath) {
+        try {
+            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            contentArea.setCenter(view); // load vào vùng trung tâm
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
