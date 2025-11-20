@@ -4,13 +4,15 @@ import java.time.LocalTime;
 
 public class PriceTable {
     private int id;
-    private String day_in_week;
+    private int start_day_in_week;
+    private int end_day_in_week;
     private LocalTime start_time, end_time;
     private float price;
 
-    public PriceTable(int id, String day_in_week,LocalTime start_time, LocalTime end_time, float price) {
+    public PriceTable(int id, int start_day_in_week, int end_day_in_week,LocalTime start_time, LocalTime end_time, float price) {
         this.id = id;
-        this.day_in_week = day_in_week;
+        this.start_day_in_week = start_day_in_week;
+        this.end_day_in_week = end_day_in_week;
         this.start_time = start_time;
         this.price = price;
         this.end_time = end_time;
@@ -24,13 +26,13 @@ public class PriceTable {
         this.id = id;
     }
 
-    public String getDay_in_week() {
-        return day_in_week;
+    public int getStart_day_in_week() {
+        return start_day_in_week;
+    }
+    public int getEnd_day_in_week() {
+        return end_day_in_week;
     }
 
-    public void setDay_in_week(String day_in_week) {
-        this.day_in_week = day_in_week;
-    }
 
     public float getPrice() {
         return price;

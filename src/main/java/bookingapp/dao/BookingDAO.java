@@ -4,6 +4,8 @@ import bookingapp.db.DatabaseManager;
 import bookingapp.model.Booking;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class BookingDAO {
 
     public List<Booking> getAll() {
         List<Booking> list = new ArrayList<>();
-        String sql = "SELECT * FROM bookings"; // đúng theo tên model bạn nói
+        String sql = "SELECT * FROM LichDat";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -22,9 +24,9 @@ public class BookingDAO {
                         rs.getInt("id"),
                         rs.getInt("userId"),
                         rs.getInt("courtId"),
-                        rs.getString("bookingDate"),
-                        rs.getString("startTime"),
-                        rs.getString("endTime"),
+                        LocalDate.parse(rs.getString("bookingDate")),
+                        LocalTime.parse(rs.getString("startTime")),
+                        LocalTime.parse(rs.getString("endTime")),
                         rs.getDouble("totalPrice")
                 ));
             }

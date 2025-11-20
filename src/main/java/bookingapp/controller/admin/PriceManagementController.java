@@ -13,7 +13,8 @@ public class PriceManagementController {
 
     @FXML private TableView<PriceTable> table;
     @FXML private TableColumn<PriceTable, Integer> colId;
-    @FXML private TableColumn<PriceTable, String> colDay;
+    @FXML private TableColumn<PriceTable, Integer> colStart_day;
+    @FXML private TableColumn<PriceTable, Integer> colEnd_day;
     @FXML private TableColumn<PriceTable, String> colStart;
     @FXML private TableColumn<PriceTable, String> colEnd;
     @FXML private TableColumn<PriceTable, Float> colPrice;
@@ -23,7 +24,8 @@ public class PriceManagementController {
     @FXML
     public void initialize() {
         colId.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getId()).asObject());
-        colDay.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getDay_in_week()));
+        colStart_day.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getStart_day_in_week()).asObject());
+        colEnd_day.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getEnd_day_in_week()).asObject());
         colStart.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getStart_time().toString()));
         colEnd.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getEnd_time().toString()));
         colPrice.setCellValueFactory(p -> new javafx.beans.property.SimpleFloatProperty(p.getValue().getPrice()).asObject());
@@ -39,24 +41,25 @@ public class PriceManagementController {
     private void handleAdd() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Thêm bảng giá");
-        dialog.setHeaderText("Nhập: Ngày,Bắt đầu,Kết thúc,Giá");
-        dialog.setContentText("VD: Monday,08:00,10:00,100000");
+        dialog.setHeaderText("Nhập: Ngày bắt đầu, Ngày kết thúc,Bắt đầu,Kết thúc,Giá");
+        dialog.setContentText("VD: 2,6,08:00,10:00,100000 (T2 -> CN ~ 2 -> 8)");
 
         Optional<String> result = dialog.showAndWait();
         if (result.isEmpty()) return;
 
         String[] parts = result.get().split(",");
-        if (parts.length != 4) {
+        if (parts.length != 5) {
             showAlert("Bạn phải nhập dạng: Day,HH:mm,HH:mm,Price", Alert.AlertType.ERROR);
             return;
         }
 
         try {
             boolean ok = dao.add(
-                    parts[0].trim(),
-                    LocalTime.parse(parts[1].trim()),
+                    Integer.parseInt(parts[0].trim()),
+                    Integer.parseInt(parts[1].trim()),
                     LocalTime.parse(parts[2].trim()),
-                    Float.parseFloat(parts[3].trim())
+                    LocalTime.parse(parts[3].trim()),
+                    Float.parseFloat(parts[4].trim())
             );
 
             if (ok) {

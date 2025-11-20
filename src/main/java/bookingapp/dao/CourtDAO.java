@@ -12,7 +12,7 @@ public class CourtDAO {
     // Lấy tất cả sân từ bảng San
     public List<Court> getAllCourts() {
         List<Court> list = new ArrayList<>();
-        String sql = "SELECT MaSan, TenSan, TrangThai FROM San";
+        String sql = "SELECT * FROM San";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -36,13 +36,12 @@ public class CourtDAO {
 
     // Thêm sân (chúng ta không dùng describe trong model hiện tại -> lưu MoTa rỗng)
     public boolean addCourt(String name, String status) {
-        String sql = "INSERT INTO San (TenSan, MoTa, TrangThai) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO San (TenSan, TrangThai) VALUES (?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, name);
-            ps.setString(2, "");           // MoTa để rỗng vì model không chứa field này
             ps.setString(3, status);
 
             int updated = ps.executeUpdate();

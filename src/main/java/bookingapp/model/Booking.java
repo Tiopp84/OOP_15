@@ -1,5 +1,8 @@
 package bookingapp.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Lớp Model (POJO) đại diện cho một đối tượng Booking (Lượt đặt).
  * Nó tương ứng với bảng 'bookings' trong CSDL.
@@ -9,15 +12,15 @@ public class Booking {
     private int id;
     private int userId;
     private int courtId;
-    private String bookingDate; // Lưu dưới dạng TEXT (ví dụ: "2025-10-30")
-    private String startTime;   // Lưu dưới dạng TEXT (ví dụ: "09:00")
-    private String endTime;     // Lưu dưới dạng TEXT (ví dụ: "10:00")
+    private LocalDate bookingDate; // Lưu dưới dạng TEXT (ví dụ: "2025-10-30")
+    private LocalTime startTime;   // Lưu dưới dạng TEXT (ví dụ: "09:00")
+    private LocalTime endTime;     // Lưu dưới dạng TEXT (ví dụ: "10:00")
     private double totalPrice;
 
     /**
      * Constructor (hàm dựng)
      */
-    public Booking(int id, int userId, int courtId, String bookingDate, String startTime, String endTime, double totalPrice) {
+    public Booking(int id, int userId, int courtId, LocalDate bookingDate, LocalTime startTime, LocalTime endTime, double totalPrice) {
         this.id = id;
         this.userId = userId;
         this.courtId = courtId;
@@ -42,15 +45,15 @@ public class Booking {
     }
 
     public String getBookingDate() {
-        return bookingDate;
+        return bookingDate.toString();
     }
 
     public String getStartTime() {
-        return startTime;
+        return startTime.toString();
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime.toString();
     }
 
     public double getTotalPrice() {
@@ -71,15 +74,15 @@ public class Booking {
         this.courtId = courtId;
     }
 
-    public void setBookingDate(String bookingDate) {
+    public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

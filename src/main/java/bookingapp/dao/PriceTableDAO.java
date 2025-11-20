@@ -21,7 +21,8 @@ public class PriceTableDAO {
             while (rs.next()) {
                 list.add(new PriceTable(
                         rs.getInt("MaGia"),
-                        rs.getString("NgayTrongTuan"),
+                        rs.getInt("NgayBatDau"),
+                        rs.getInt("NgayKetThuc"),
                         LocalTime.parse(rs.getString("ThoiGianBatDau")),
                         LocalTime.parse(rs.getString("ThoiGianKetThuc")),
                         rs.getFloat("GiaMoiGio")
@@ -34,16 +35,17 @@ public class PriceTableDAO {
         return list;
     }
 
-    public boolean add(String day, LocalTime start, LocalTime end, float price) {
-        String sql = "INSERT INTO BangGia(NgayTrongTuan, ThoiGianBatDau, ThoiGianKetThuc, GiaMoiGio) VALUES (?, ?, ?, ?)";
+    public boolean add(int start_day, int end_day, LocalTime start, LocalTime end, float price) {
+        String sql = "INSERT INTO BangGia(NgayBatDau, NgayKetThuc, ThoiGianBatDau, ThoiGianKetThuc, GiaMoiGio) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, day);
-            ps.setString(2, start.toString());
-            ps.setString(3, end.toString());
-            ps.setFloat(4, price);
+            ps.setInt(1, start_day);
+            ps.setInt(2, end_day);
+            ps.setString(3, start.toString());
+            ps.setString(4, end.toString());
+            ps.setFloat(5, price);
 
             return ps.executeUpdate() > 0;
 
