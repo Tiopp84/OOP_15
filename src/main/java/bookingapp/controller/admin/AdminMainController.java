@@ -49,6 +49,11 @@ public class AdminMainController {
             case "Quản lý lịch đặt":
                 loadView("/bookingapp/view/admin/bookingManagement.fxml");
                 break;
+
+            case "Quản lý lịch ngoại lệ":
+                loadView("/bookingapp/view/admin/exceptionSchedule.fxml");
+                break;
+
         }
     }
 

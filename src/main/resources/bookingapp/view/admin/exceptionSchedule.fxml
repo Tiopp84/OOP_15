@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10"
+      xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="bookingapp.controller.admin.ExceptionScheduleController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Quản lý lịch ngoại lệ" styleClass="header"/>
+
+    <HBox spacing="10">
+        <Label text="Mã sân:" />
+        <TextField fx:id="txtMaSan" />
+
+        <Label text="Ngày:" />
+        <TextField fx:id="txtNgay" promptText="YYYY-MM-DD"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Bắt đầu:" />
+        <TextField fx:id="txtStart" promptText="HH:mm" />
+
+        <Label text="Kết thúc:" />
+        <TextField fx:id="txtEnd" promptText="HH:mm" />
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Loại hoạt động:" />
+        <TextField fx:id="txtLoai" />
+
+        <Label text="Ghi chú:" />
+        <TextField fx:id="txtNote" />
+    </HBox>
+
+    <Button text="Thêm ngoại lệ" onAction="#handleAdd"/>
+
+    <TableView fx:id="table">
+        <columns>
+            <TableColumn text="Mã hoạt động" fx:id="colId" prefWidth="100"/>
+            <TableColumn text="Mã sân" fx:id="colMaSan" prefWidth="80"/>
+            <TableColumn text="Ngày" fx:id="colNgay" prefWidth="100"/>
+            <TableColumn text="Bắt đầu" fx:id="colBatDau" prefWidth="80"/>
+            <TableColumn text="Kết thúc" fx:id="colKetThuc" prefWidth="80"/>
+            <TableColumn text="Loại" fx:id="colLoai" prefWidth="120"/>
+            <TableColumn text="Ghi chú" fx:id="colGhiChu" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <Button text="Xóa mục đã chọn" onAction="#handleDelete"/>
+</VBox>
