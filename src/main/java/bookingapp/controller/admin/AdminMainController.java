@@ -42,6 +42,9 @@ public class AdminMainController {
                 loadView("/bookingapp/view/admin/courtManagement.fxml");
                 break;
 
+            case "Quản lý bảng giá":
+                loadView("/bookingapp/view/admin/priceManagement.fxml");
+                break;
         }
     }
 
