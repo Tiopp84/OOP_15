@@ -37,6 +37,11 @@ public class AdminMainController {
                 loadView("/bookingapp/view/admin/userManagement.fxml");
                 break;
             // các chức năng khác bạn load tương tự
+
+            case "Quản lý sân":
+                loadView("/bookingapp/view/admin/courtManagement.fxml");
+                break;
+
         }
     }
 
