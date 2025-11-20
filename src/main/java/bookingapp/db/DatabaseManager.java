@@ -5,11 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class DatabaseManager {
 
     private static final String DATABASE_URL = "jdbc:sqlite:badminton.db";
-
     private static DatabaseManager instance;
 
     private DatabaseManager() {
@@ -27,65 +25,80 @@ public class DatabaseManager {
         return DriverManager.getConnection(DATABASE_URL);
     }
 
-
     private void createTables() {
-        // users
-        String createUserTableSQL = "CREATE TABLE IF NOT EXISTS users ("
-                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " username TEXT NOT NULL UNIQUE,"
-                + " password TEXT NOT NULL,"
-                + " role TEXT NOT NULL"
-                + ");";
-       // courts
-        String createSanTableSQL = "CREATE TABLE IF NOT EXISTS San ("
-                + " MaSan INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " TenSan TEXT NOT NULL,"
-                + " MoTa TEXT,"
-                + " TrangThai TEXT DEFAULT 'HoatDong'"
-                + ");";
-        // 3. Bảng Quy tắc Giá
-        String createBangGiaTableSQL = "CREATE TABLE IF NOT EXISTS BangGia ("
-                + " MaGia INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " NgayTrongTuan TEXT NOT NULL,"
-                + " ThoiGianBatDau TEXT NOT NULL,"  // Lưu dạng "HH:MM:SS"
-                + " ThoiGianKetThuc TEXT NOT NULL," // Lưu dạng "HH:MM:SS"
-                + " GiaMoiGio REAL NOT NULL"        // Dùng REAL cho số thập phân (tiền)
-                + ");";
-        // 4. Bảng Lịch Đặt (của khách)
-        String createLichDatTableSQL = "CREATE TABLE IF NOT EXISTS LichDat ("
-                + " MaDatLich INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " MaSan INTEGER NOT NULL,"
-                + " User_id INTEGER NOT NULL,"
-                + " Ngay TEXT NOT NULL,"             // Lưu dạng "YYYY-MM-DD"
-                + " ThoiGianBatDau TEXT NOT NULL,"
-                + " ThoiGianKetThuc TEXT NOT NULL,"
-                + " GiaLucDat REAL,"
-                + " TrangThaiThanhToan TEXT DEFAULT 'ChuaThanhToan',"
-                + " FOREIGN KEY (MaSan) REFERENCES San(MaSan),"
-                + " FOREIGN KEY (User_id) REFERENCES users(id),"
-                + " UNIQUE (MaSan, Ngay, ThoiGianBatDau)"
-                + ");";
-        // 5. Bảng Lịch Ngoại Lệ (Đóng/Sự kiện)
-        String createLichNgoaiLeTableSQL = "CREATE TABLE IF NOT EXISTS LichNgoaiLe ("
-                + " MaHoatDong INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " MaSan INTEGER NOT NULL,"
-                + " Ngay TEXT NOT NULL,"
-                + " ThoiGianBatDau TEXT NOT NULL,"
-                + " ThoiGianKetThuc TEXT NOT NULL,"
-                + " LoaiHoatDong TEXT NOT NULL," // ('Khoa', 'SuKien', 'BaoTri')
-                + " GhiChu TEXT,"
-                + " FOREIGN KEY (MaSan) REFERENCES San(MaSan)"
-                + ");";
+        // 1. Bảng users
+        String createUserTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " username TEXT NOT NULL UNIQUE," +
+                " password TEXT NOT NULL," +
+                " role TEXT NOT NULL" +
+                ");";
+
+        // 2. Bảng courts
+        String createSanTableSQL = "CREATE TABLE IF NOT EXISTS San (" +
+                " MaSan INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " TenSan TEXT NOT NULL," +
+                " MoTa TEXT," +
+                " TrangThai TEXT DEFAULT 'HoatDong'" +
+                ");";
+
+        // 3. Bảng BangGia
+        String createBangGiaTableSQL = "CREATE TABLE IF NOT EXISTS BangGia (" +
+                " MaGia INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " NgayTrongTuan TEXT NOT NULL," +
+                " ThoiGianBatDau TEXT NOT NULL," +
+                " ThoiGianKetThuc TEXT NOT NULL," +
+                " GiaMoiGio REAL NOT NULL" +
+                ");";
+
+        // 4. Bảng LichDat
+        String createLichDatTableSQL = "CREATE TABLE IF NOT EXISTS LichDat (" +
+                " MaDatLich INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " MaSan INTEGER NOT NULL," +
+                " User_id INTEGER NOT NULL," +
+                " Ngay TEXT NOT NULL," +
+                " ThoiGianBatDau TEXT NOT NULL," +
+                " ThoiGianKetThuc TEXT NOT NULL," +
+                " GiaLucDat REAL," +
+                " TrangThaiThanhToan TEXT DEFAULT 'ChuaThanhToan'," +
+                " FOREIGN KEY (MaSan) REFERENCES San(MaSan)," +
+                " FOREIGN KEY (User_id) REFERENCES users(id)," +
+                " UNIQUE (MaSan, Ngay, ThoiGianBatDau)" +
+                ");";
+
+        // 5. Bảng LichNgoaiLe
+        String createLichNgoaiLeTableSQL = "CREATE TABLE IF NOT EXISTS LichNgoaiLe (" +
+                " MaHoatDong INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " MaSan INTEGER NOT NULL," +
+                " Ngay TEXT NOT NULL," +
+                " ThoiGianBatDau TEXT NOT NULL," +
+                " ThoiGianKetThuc TEXT NOT NULL," +
+                " LoaiHoatDong TEXT NOT NULL," +
+                " GhiChu TEXT," +
+                " FOREIGN KEY (MaSan) REFERENCES San(MaSan)" +
+                ");";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
+            // Tạo các bảng
             stmt.execute(createUserTableSQL);
             stmt.execute(createSanTableSQL);
             stmt.execute(createBangGiaTableSQL);
             stmt.execute(createLichDatTableSQL);
             stmt.execute(createLichNgoaiLeTableSQL);
-            System.out.println("Tables created successfully (if not existed).");
+
+            // --- Chèn admin mặc định nếu chưa tồn tại ---
+            String insertAdminSQL = "INSERT INTO users(username, password, role) " +
+                    "SELECT 'admin', 'admin123', 'admin' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM users WHERE username='admin');";
+            stmt.execute(insertAdminSQL);
+
+            // --- Cập nhật admin nếu đã tồn tại để đảm bảo password là 'admin123' ---
+            String updateAdminSQL = "UPDATE users SET password='admin123', role='admin' WHERE username='admin';";
+            stmt.execute(updateAdminSQL);
+
+            System.out.println("Tables created successfully and default admin inserted/updated.");
 
         } catch (SQLException e) {
             System.err.println("Error creating tables: " + e.getMessage());
@@ -93,4 +106,3 @@ public class DatabaseManager {
         }
     }
 }
-
