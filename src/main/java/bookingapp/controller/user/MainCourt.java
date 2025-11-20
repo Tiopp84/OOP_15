@@ -12,15 +12,17 @@ public class MainCourt {
     @FXML
     private void initialize(){
         bt_court1.setOnAction(e -> {
-
+            UserMainController.getMainController().loadContent("court1.fxml");
         });
         bt_court2.setOnAction(e -> {
+            UserMainController.getMainController().loadContent("court2.fxml");
+        });
+        bt_court3.setOnAction(e -> {
+            UserMainController.getMainController().loadContent("court3.fxml");
 
         });
-        bt_court2.setOnAction(e -> {
-
-        });
-        bt_court2.setOnAction(e -> {
+        bt_court4.setOnAction(e -> {
+            UserMainController.getMainController().loadContent("court4.fxml");
 
         });
 

@@ -24,10 +24,21 @@ public class UserMainController {
     @FXML private Label Chaomung;
     private User currentUser;
 
+    private static UserMainController mainController;
+
+    public static void setMainController(UserMainController controller) {
+        mainController = controller;
+    }
+
+    public static UserMainController getMainController() {
+        return mainController;
+    }
+
 
 
     @FXML
     public void initialize(){
+        UserMainController.setMainController(this);
         currentUser = Session.getCurrentUser();
         if(currentUser != null) Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
         else Chaomung.setText("Welcome!");
@@ -56,7 +67,7 @@ public class UserMainController {
         });
     }
 
-    private void loadContent(String fxml) {
+    public void loadContent(String fxml) {
         try {
             VBox view = FXMLLoader.load(getClass().getResource("/bookingapp/view/user/" + fxml));
             contentArea.getChildren().setAll(view);
