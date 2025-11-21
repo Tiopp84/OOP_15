@@ -171,3 +171,18 @@
     -fx-background-color: #C8E6C9; /* Đổi sang màu nền của sidebar */
     -fx-border-color: #81C784;
 }
+
+.button-hour {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D0D0D0; /* Viền xám nhạt */
+    -fx-border-width: 1px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+
+    /* Thiết lập kích thước để nó trông vuông vắn trong VBox */
+    -fx-pref-width: 60px; /* Điều chỉnh để nó vừa vặn trong container */
+    -fx-pref-height: 40px; /* Để nó là hình chữ nhật nếu tổng thể VBox cao hơn */
+
+    -fx-padding: 0; /* Không có padding nội tại */
+    -fx-text-fill: transparent; /* Ẩn chữ nếu có */
+}
