@@ -1,30 +1,36 @@
 package bookingapp.controller.user;
 
 import bookingapp.App;
+import bookingapp.dao.UserDAO;
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 public class UserMainController {
 
-    @FXML private VBox contentArea;
+    @FXML private BorderPane contentArea;
     @FXML private Button bt_booking;
     @FXML private Button bt_pricedetail;
     @FXML private Button bt_history;
     @FXML private Button bt_info;
+    @FXML private Button info_court;
     @FXML private Button bt_logout;
     @FXML private Label Chaomung;
     private User currentUser;
 
     private static UserMainController mainController;
+
+    private UserDAO userdao;
 
     public static void setMainController(UserMainController controller) {
         mainController = controller;
@@ -40,8 +46,14 @@ public class UserMainController {
     public void initialize(){
         UserMainController.setMainController(this);
         currentUser = Session.getCurrentUser();
-        if(currentUser != null) Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
-        else Chaomung.setText("Welcome!");
+        if(currentUser == null){
+            userdao = new UserDAO();
+            Chaomung.setText("Welcome!");
+            currentUser = userdao.validateUser("sang", "123");
+            Session.setCurrentUser(currentUser);
+        }
+        Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
+
         loadContent("maincourt.fxml");
 
         bt_pricedetail.setOnAction(e->{
@@ -56,6 +68,9 @@ public class UserMainController {
         bt_booking.setOnAction(e->{
             loadContent("maincourt.fxml");
         });
+        info_court.setOnAction(e -> {
+            loadContent("info_court.fxml");
+        });
 
 
         bt_logout.setOnAction(a -> {
@@ -69,8 +84,8 @@ public class UserMainController {
 
     public void loadContent(String fxml) {
         try {
-            VBox view = FXMLLoader.load(getClass().getResource("/bookingapp/view/user/" + fxml));
-            contentArea.getChildren().setAll(view);
+            Parent view = FXMLLoader.load(getClass().getResource("/bookingapp/view/user/" + fxml));
+            contentArea.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
