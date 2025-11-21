@@ -84,13 +84,13 @@ public class Court4 {
     private void loadStatus(){
         for(int h = 0; h < 24; h++){
             Button btn = hourToButton(h);
-            btn.setStyle("-fx-background-color: white;");
+            btn.setStyle("-fx-background-color: #FFFFFF;");
         }
         if(LoadDAO.isLook(4)){
             for(int h = 0; h < 24; h++){
                 Button btn = hourToButton(h);
                 btn.setDisable(true);
-                btn.setStyle("-fx-background-color: grey;");
+                btn.setStyle("-fx-background-color: #A8A8A8;");
 
             }
             return;
@@ -100,7 +100,7 @@ public class Court4 {
             Button btn = hourToButton(h);
             if(LichNgoaiLe.containsKey(h)){
                 btn.setDisable(true);
-                btn.setStyle("-fx-background-color: grey;");
+                btn.setStyle("-fx-background-color: #A8A8A8;");
             }
             else{
                 btn.setDisable(false);
@@ -114,7 +114,7 @@ public class Court4 {
 
             if(LichDat.containsKey(h)){
                 btn.setDisable(true);
-                btn.setStyle("-fx-background-color: red");
+                btn.setStyle("-fx-background-color: #FF6D6D;");
             }
             else{
                 btn.setDisable(false);
@@ -127,7 +127,7 @@ public class Court4 {
         btn.setOnAction(e->{
             if(!picked.containsKey(h)){
                 picked.put(h, true);
-                btn.setStyle("-fx-background-color:green;");
+                btn.setStyle("-fx-background-color: #50fff9;");
             }
             else{
                 picked.remove(h);
@@ -157,10 +157,14 @@ public class Court4 {
                 }
             }
         });
+        picked_date = fld_date.getValue().toString();
         fld_date.setOnAction(e->{
             fld_date.show();
+            picked_date = fld_date.getValue().toString();
+            LichNgoaiLe = LoadDAO.loadAllLichNgoaiLe(picked_date, 4);
+            LichDat = LoadDAO.loadLichDat(picked_date, 4);
+            loadStatus();
         });
-        picked_date = fld_date.getValue().toString();
         LichNgoaiLe = LoadDAO.loadAllLichNgoaiLe(picked_date, 4);
         LichDat = LoadDAO.loadLichDat(picked_date, 4);
         picked = new HashMap<>();
@@ -205,7 +209,9 @@ public class Court4 {
                     e++;
                 }
                 String end = String.format("%02d:00", e);
-                h = e;
+                if(e == 24){
+                    end = "23:59";
+                }
                 boolean Add = Bookingdao.add(new Booking(user.getId(), 4, LocalDate.parse(picked_date), LocalTime.parse(start), LocalTime.parse(end), 0));
                 if(Add){
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đặt sân thành công!");
@@ -213,8 +219,24 @@ public class Court4 {
                 else{
                     showAlert(Alert.AlertType.ERROR, "Thất bại", "Đặt sân không thành công!");
                 }
+                for (int i = h; i < e; i++) {
+                    // RẤT QUAN TRỌNG: Loại bỏ giờ khỏi map sau khi đã cố gắng đặt
+                    picked.remove(i);
+
+                    // Đặt lại màu trắng cho nút vừa được xác nhận
+                    Button btn = hourToButton(i);
+                    if (btn != null) {
+                        btn.setStyle("-fx-background-color: white;");
+                    }
+                }
+                h = e - 1;
             }
         }
+        picked_date = fld_date.getValue().toString();
+        LichNgoaiLe = LoadDAO.loadAllLichNgoaiLe(picked_date, 4);
+        LichDat = LoadDAO.loadLichDat(picked_date, 4);
+        loadStatus();
+
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

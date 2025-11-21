@@ -44,7 +44,8 @@ public class LoadStatusDAO {
             while (rs.next()) {
                 int start = Integer.parseInt(rs.getString("ThoiGianBatDau").split(":")[0]);
                 int end   = Integer.parseInt(rs.getString("ThoiGianKetThuc").split(":")[0]);
-
+                int end_m   = Integer.parseInt(rs.getString("ThoiGianKetThuc").split(":")[1]);
+                if(end_m != 0) end = 24;
                 for (int h = start; h < end; h++) {
                     map.put(h, new LoadStatus(h, maSan, picked_date, "Khoa"));
                 }
@@ -71,7 +72,8 @@ public class LoadStatusDAO {
             while (rs.next()) {
                 int start = Integer.parseInt(rs.getString("ThoiGianBatDau").split(":")[0]);
                 int end   = Integer.parseInt(rs.getString("ThoiGianKetThuc").split(":")[0]);
-
+                int end_m   = Integer.parseInt(rs.getString("ThoiGianKetThuc").split(":")[1]);
+                if(end_m != 0) end = 24;
                 for (int h = start; h < end; h++) {
                     map.put(h, new LoadStatus(h, maSan, picked_date, "DaDat"));
                 }
