@@ -21,7 +21,6 @@ public class BookingDAO {
 
             while (rs.next()) {
                 list.add(new Booking(
-                        rs.getInt("id"),
                         rs.getInt("userId"),
                         rs.getInt("courtId"),
                         LocalDate.parse(rs.getString("bookingDate")),
@@ -48,6 +47,32 @@ public class BookingDAO {
 
         } catch (SQLException e) {
             System.err.println("Lỗi BookingDAO.delete: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean add(Booking booking){
+        String sql = "INSERT INTO LichDat(MaSan, User_id, Ngay, ThoiGianBatDau, ThoiGianKetThuc, GiaLucDat) VALUES(?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, booking.getCourtId());
+            pstmt.setInt(2, booking.getUserId());
+            pstmt.setString(3, booking.getBookingDate());
+            pstmt.setString(4, booking.getStartTime());
+            pstmt.setString(5, booking.getEndTime());
+            pstmt.setDouble(6, booking.getTotalPrice());
+
+            int rowsAffected = pstmt.executeUpdate();// dung cho cac truy van khong tra ve du lieu
+            // tra ve so luong dong bi thay doi trong csdl
+
+            return rowsAffected > 0; // == 1
+
+        } catch (SQLException e) {
+            // Lỗi SQL (ví dụ: UNIQUE constraint failed - username đã tồn tại)
+            System.err.println("Lỗi khi thêm Lịch Đặt: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
