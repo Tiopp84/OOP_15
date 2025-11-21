@@ -1,18 +1,229 @@
 package bookingapp.controller.user;
 
+import bookingapp.dao.BookingDAO;
+import bookingapp.dao.LoadStatusDAO;
+import bookingapp.model.Booking;
+import bookingapp.model.LoadStatus;
+import bookingapp.model.User;
+import bookingapp.util.Session;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Court4 {
     @FXML private Label lb_header;
     @FXML private DatePicker fld_date;
+    @FXML private Button h_1;
+    @FXML private Button h_2;
+    @FXML private Button h_3;
+    @FXML private Button h_4;
+    @FXML private Button h_5;
+    @FXML private Button h_6;
+    @FXML private Button h_7;
+    @FXML private Button h_8;
+    @FXML private Button h_9;
+    @FXML private Button h_10;
+    @FXML private Button h_11;
+    @FXML private Button h_12;
+    @FXML private Button h_13;
+    @FXML private Button h_14;
+    @FXML private Button h_15;
+    @FXML private Button h_16;
+    @FXML private Button h_17;
+    @FXML private Button h_18;
+    @FXML private Button h_19;
+    @FXML private Button h_20;
+    @FXML private Button h_21;
+    @FXML private Button h_22;
+    @FXML private Button h_23;
+    @FXML private Button h_24;
+    @FXML private Button bt_confirm;
+    private String picked_date;
+    private LoadStatusDAO LoadDAO = new LoadStatusDAO();
+    private BookingDAO Bookingdao = new BookingDAO();
+    private User user;
+    private Map<Integer, LoadStatus> LichNgoaiLe;
+    private Map<Integer, LoadStatus> LichDat;
+    private Map<Integer, Boolean> picked;
+
+    private Button hourToButton(int h) {
+        switch (h) {
+            case 0: return h_1;
+            case 1: return h_2;
+            case 2: return h_3;
+            case 3: return h_4;
+            case 4: return h_5;
+            case 5: return h_6;
+            case 6: return h_7;
+            case 7: return h_8;
+            case 8: return h_9;
+            case 9: return h_10;
+            case 10: return h_11;
+            case 11: return h_12;
+            case 12: return h_13;
+            case 13: return h_14;
+            case 14: return h_15;
+            case 15: return h_16;
+            case 16: return h_17;
+            case 17: return h_18;
+            case 18: return h_19;
+            case 19: return h_20;
+            case 20: return h_21;
+            case 21: return h_22;
+            case 22: return h_23;
+            case 23: return h_24;
+            default: return null;
+        }
+    }
+
+
+    private void loadStatus(){
+        for(int h = 0; h < 24; h++){
+            Button btn = hourToButton(h);
+            btn.setStyle("-fx-background-color: white;");
+        }
+        if(LoadDAO.isLook(4)){
+            for(int h = 0; h < 24; h++){
+                Button btn = hourToButton(h);
+                btn.setDisable(true);
+                btn.setStyle("-fx-background-color: grey;");
+
+            }
+            return;
+        }
+        // Load LichDatNgoaiLe
+        for(int h = 0; h < 24; h++){
+            Button btn = hourToButton(h);
+            if(LichNgoaiLe.containsKey(h)){
+                btn.setDisable(true);
+                btn.setStyle("-fx-background-color: grey;");
+            }
+            else{
+                btn.setDisable(false);
+            }
+        }
+
+        //LoadLichDat
+        for(int h = 0; h < 24; h++){
+            if(LichNgoaiLe.containsKey(h)) continue;
+            Button btn = hourToButton(h);
+
+            if(LichDat.containsKey(h)){
+                btn.setDisable(true);
+                btn.setStyle("-fx-background-color: red");
+            }
+            else{
+                btn.setDisable(false);
+            }
+        }
+    }
+
+    private void handle_btn(int h){
+        Button btn = hourToButton(h);
+        btn.setOnAction(e->{
+            if(!picked.containsKey(h)){
+                picked.put(h, true);
+                btn.setStyle("-fx-background-color:green;");
+            }
+            else{
+                picked.remove(h);
+                btn.setStyle("-fx-background-color:white;");
+            }
+        });
+    }
+
 
     @FXML
     private void initialize(){
+        user = Session.getCurrentUser();
         lb_header.setText("Đặt Lịch Sân 4");
+        fld_date.setValue(LocalDate.now());
+        fld_date.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                LocalDate today = LocalDate.now();
+                LocalDate maxDay = today.plusDays(7);
+
+                // Disable các ngày < hôm nay hoặc > 7 ngày tới
+                if (date.isBefore(today) || date.isAfter(maxDay)) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #eee;");
+                }
+            }
+        });
         fld_date.setOnAction(e->{
             fld_date.show();
         });
+        picked_date = fld_date.getValue().toString();
+        LichNgoaiLe = LoadDAO.loadAllLichNgoaiLe(picked_date, 4);
+        LichDat = LoadDAO.loadLichDat(picked_date, 4);
+        picked = new HashMap<>();
+        handle_btn(0);
+        handle_btn(1);
+        handle_btn(2);
+        handle_btn(3);
+        handle_btn(4);
+        handle_btn(5);
+        handle_btn(6);
+        handle_btn(7);
+        handle_btn(8);
+        handle_btn(9);
+        handle_btn(10);
+        handle_btn(11);
+        handle_btn(12);
+        handle_btn(13);
+        handle_btn(14);
+        handle_btn(15);
+        handle_btn(16);
+        handle_btn(17);
+        handle_btn(18);
+        handle_btn(19);
+        handle_btn(20);
+        handle_btn(21);
+        handle_btn(22);
+        handle_btn(23);
+        bt_confirm.setOnAction(e->{
+            handleConfirm();
+        });
+        loadStatus();
+    }
+    private void handleConfirm(){
+        for(Integer i : picked.keySet()){
+            System.out.println(i);
+        }
+        for(int h = 0; h < 24; h++){
+            if(picked.containsKey(h)){
+                String start = String.format("%02d:00", h);
+                int e = h + 1;
+                while(e < 24 && picked.containsKey(e)){
+                    e++;
+                }
+                String end = String.format("%02d:00", e);
+                h = e;
+                boolean Add = Bookingdao.add(new Booking(user.getId(), 4, LocalDate.parse(picked_date), LocalTime.parse(start), LocalTime.parse(end), 0));
+                if(Add){
+                    showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đặt sân thành công!");
+                }
+                else{
+                    showAlert(Alert.AlertType.ERROR, "Thất bại", "Đặt sân không thành công!");
+                }
+            }
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null); // Không có tiêu đề phụ
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
+
+
