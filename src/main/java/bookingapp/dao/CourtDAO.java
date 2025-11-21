@@ -42,7 +42,7 @@ public class CourtDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, name);
-            ps.setString(3, status);
+            ps.setString(2, status);
 
             int updated = ps.executeUpdate();
             return updated > 0;

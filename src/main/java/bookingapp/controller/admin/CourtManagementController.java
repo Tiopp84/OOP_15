@@ -5,11 +5,9 @@ import bookingapp.model.Court;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-import java.util.Optional;
+import javafx.scene.layout.HBox;
 
 public class CourtManagementController {
 
@@ -17,6 +15,7 @@ public class CourtManagementController {
     @FXML private TableColumn<Court, Integer> colId;
     @FXML private TableColumn<Court, String> colName;
     @FXML private TableColumn<Court, String> colStatus;
+    @FXML private TableColumn<Court, Void> colActions;
 
     private CourtDAO courtDAO = new CourtDAO();
 
@@ -26,6 +25,7 @@ public class CourtManagementController {
         colName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         colStatus.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStatus()));
 
+        addActionButtons();
         loadCourts();
     }
 
@@ -33,89 +33,51 @@ public class CourtManagementController {
         tableCourts.setItems(FXCollections.observableArrayList(courtDAO.getAllCourts()));
     }
 
-    // --------------------------------------------------
-    // Thêm sân
-    // --------------------------------------------------
-    @FXML
-    public void handleAddCourt() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Thêm sân");
-        dialog.setHeaderText("Nhập theo dạng: Tên sân,Trạng thái");
-        dialog.setContentText("Thông tin:");
+    // ------------------- Tạo nút hành động cho mỗi hàng ---------------------
+    private void addActionButtons() {
+        colActions.setCellFactory(col -> new TableCell<>() {
 
-        Optional<String> result = dialog.showAndWait();
-        if (result.isEmpty()) return;
+            private final Button btnActive = new Button("Hoạt động");
+            private final Button btnClose = new Button("Đóng");
+            private final Button btnMaintain = new Button("Bảo trì");
 
-        String[] parts = result.get().split(",");
-        if (parts.length != 2) {
-            alert("Lỗi", "Sai định dạng! Hãy nhập: Tên sân,Trạng thái", Alert.AlertType.ERROR);
-            return;
-        }
+            {
+                // Giao diện đẹp hơn
+                btnActive.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+                btnClose.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
+                btnMaintain.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white;");
 
-        String name = parts[0].trim();
-        String status = parts[1].trim();
+                btnActive.setOnAction(e -> updateStatus("Hoạt động"));
+                btnClose.setOnAction(e -> updateStatus("Đóng"));
+                btnMaintain.setOnAction(e -> updateStatus("Bảo trì"));
+            }
 
-        System.out.println("DEBUG: Thêm sân -> name='" + name + "' status='" + status + "'");
+            private void updateStatus(String status) {
+                Court court = getTableView().getItems().get(getIndex());
+                boolean ok = courtDAO.updateStatus(court.getId(), status);
 
-        boolean ok = courtDAO.addCourt(name, status);
+                if (ok) {
+                    alert("Thành công", "Đã cập nhật trạng thái sân!", Alert.AlertType.INFORMATION);
+                    loadCourts();
+                } else {
+                    alert("Lỗi", "Không thể cập nhật trạng thái!", Alert.AlertType.ERROR);
+                }
+            }
 
-        if (ok) {
-            alert("Thành công", "Đã thêm sân!", Alert.AlertType.INFORMATION);
-            loadCourts();
-        } else {
-            alert("Lỗi", "Không thể thêm sân! Kiểm tra log trên console.", Alert.AlertType.ERROR);
-        }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox box = new HBox(5, btnActive, btnClose, btnMaintain);
+                    setGraphic(box);
+                }
+            }
+        });
     }
 
-    // --------------------------------------------------
-    // Xóa sân
-    // --------------------------------------------------
-    @FXML
-    public void handleDeleteCourt() {
-        Court selected = tableCourts.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            alert("Lỗi", "Hãy chọn 1 sân!", Alert.AlertType.WARNING);
-            return;
-        }
-
-        if (courtDAO.deleteCourt(selected.getId())) {
-            alert("Thành công", "Đã xóa sân!", Alert.AlertType.INFORMATION);
-            loadCourts();
-        } else {
-            alert("Lỗi", "Không thể xóa sân!", Alert.AlertType.ERROR);
-        }
-    }
-
-    // --------------------------------------------------
-    // Đổi trạng thái sân
-    // --------------------------------------------------
-    @FXML
-    public void handleChangeStatus() {
-        Court selected = tableCourts.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            alert("Lỗi", "Hãy chọn sân!", Alert.AlertType.WARNING);
-            return;
-        }
-
-        TextInputDialog dialog = new TextInputDialog(selected.getStatus());
-        dialog.setTitle("Đổi trạng thái sân");
-        dialog.setHeaderText("Sân: " + selected.getName());
-        dialog.setContentText("Trạng thái mới:");
-
-        Optional<String> result = dialog.showAndWait();
-        if (result.isEmpty()) return;
-
-        boolean ok = courtDAO.updateStatus(selected.getId(), result.get());
-
-        if (ok) {
-            alert("Thành công", "Đã đổi trạng thái!", Alert.AlertType.INFORMATION);
-            loadCourts();
-        } else {
-            alert("Lỗi", "Không thể đổi trạng thái!", Alert.AlertType.ERROR);
-        }
-    }
-
-    // --------------------------------------------------
     private void alert(String title, String msg, Alert.AlertType type) {
         Alert al = new Alert(type);
         al.setTitle(title);
