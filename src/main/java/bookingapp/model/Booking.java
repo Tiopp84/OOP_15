@@ -30,6 +30,15 @@ public class Booking {
         this.totalPrice = totalPrice;
     }
 
+    public Booking(int userId, int courtId, LocalDate bookingDate, LocalTime startTime, LocalTime endTime, double totalPrice) {
+        this.userId = userId;
+        this.courtId = courtId;
+        this.bookingDate = bookingDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.totalPrice = totalPrice;
+    }
+
     // Các hàm Getters
 
     public int getId() {
