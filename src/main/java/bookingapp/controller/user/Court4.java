@@ -135,9 +135,10 @@ public class Court4 {
 
     private void handle_btn(int h){
         Button btn = hourToButton(h);
-        int day_in_week = DOW.getValue() + 1;
-        double res_price = pricePHourDAO.getPrice(day_in_week, h).getPrice();
         btn.setOnAction(e->{
+            DOW = fld_date.getValue().getDayOfWeek(); // dayofweek
+            int day_in_week = DOW.getValue() + 1;
+            double res_price = pricePHourDAO.getPrice(day_in_week, h).getPrice();
             if(!picked.containsKey(h)){
                 picked.put(h, true);
                 btn.setStyle("-fx-background-color: #50fff9;");
@@ -150,6 +151,10 @@ public class Court4 {
                 picked.remove(h);
                 Total -= res_price;
                 if(Total == 0) total.setVisible(false);
+                else{
+                    String text = String.format("Tổng tiền: %.0fVND", Total);
+                    total.setText(text);
+                }
                 btn.setStyle("-fx-background-color:white;");
             }
         });
@@ -190,30 +195,9 @@ public class Court4 {
         LichDat = LoadDAO.loadLichDat(picked_date, 4);
         picked = new HashMap<>();
         loadStatus();
-        handle_btn(0);
-        handle_btn(1);
-        handle_btn(2);
-        handle_btn(3);
-        handle_btn(4);
-        handle_btn(5);
-        handle_btn(6);
-        handle_btn(7);
-        handle_btn(8);
-        handle_btn(9);
-        handle_btn(10);
-        handle_btn(11);
-        handle_btn(12);
-        handle_btn(13);
-        handle_btn(14);
-        handle_btn(15);
-        handle_btn(16);
-        handle_btn(17);
-        handle_btn(18);
-        handle_btn(19);
-        handle_btn(20);
-        handle_btn(21);
-        handle_btn(22);
-        handle_btn(23);
+        for(int h = 0; h < 24; h++){
+            handle_btn(h);
+        }
         bt_confirm.setOnAction(e->{
             handleConfirm();
         });
