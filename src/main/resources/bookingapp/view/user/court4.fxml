@@ -313,13 +313,18 @@
       </FlowPane>
    </center>
    <bottom>
-      <HBox alignment="BOTTOM_CENTER" BorderPane.alignment="CENTER">
+      <HBox alignment="BOTTOM_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="bt_confirm" mnemonicParsing="false" text="Xác nhận đặt">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
+            <Label fx:id="total" text="Total" textFill="#7c68bd" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets bottom="25.0" />
