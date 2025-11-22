@@ -4,7 +4,6 @@ package bookingapp.model;
 public class Court {
     private int id;
     private String name;
-    private String describe;
     private String status;
 
 

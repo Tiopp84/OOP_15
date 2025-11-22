@@ -2,13 +2,16 @@ package bookingapp.controller.user;
 
 import bookingapp.dao.BookingDAO;
 import bookingapp.dao.LoadStatusDAO;
+import bookingapp.dao.Price_pHourDAO;
 import bookingapp.model.Booking;
 import bookingapp.model.LoadStatus;
+import bookingapp.model.Price_pHour;
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -42,6 +45,8 @@ public class Court4 {
     @FXML private Button h_23;
     @FXML private Button h_24;
     @FXML private Button bt_confirm;
+    @FXML private Label total;
+    private double Total;
     private String picked_date;
     private LoadStatusDAO LoadDAO = new LoadStatusDAO();
     private BookingDAO Bookingdao = new BookingDAO();
@@ -49,6 +54,8 @@ public class Court4 {
     private Map<Integer, LoadStatus> LichNgoaiLe;
     private Map<Integer, LoadStatus> LichDat;
     private Map<Integer, Boolean> picked;
+    private Price_pHourDAO pricePHourDAO = new Price_pHourDAO();
+    private DayOfWeek DOW;
 
     private Button hourToButton(int h) {
         switch (h) {
@@ -82,6 +89,9 @@ public class Court4 {
 
 
     private void loadStatus(){
+        Total = 0;
+        total.setVisible(false);
+        DOW = fld_date.getValue().getDayOfWeek(); // dayofweek
         for(int h = 0; h < 24; h++){
             Button btn = hourToButton(h);
             btn.setStyle("-fx-background-color: #FFFFFF;");
@@ -122,15 +132,24 @@ public class Court4 {
         }
     }
 
+
     private void handle_btn(int h){
         Button btn = hourToButton(h);
+        int day_in_week = DOW.getValue() + 1;
+        double res_price = pricePHourDAO.getPrice(day_in_week, h).getPrice();
         btn.setOnAction(e->{
             if(!picked.containsKey(h)){
                 picked.put(h, true);
                 btn.setStyle("-fx-background-color: #50fff9;");
+                total.setVisible(true);
+                Total += res_price;
+                String text = String.format("Tổng tiền: %.0fVND", Total);
+                total.setText(text);
             }
             else{
                 picked.remove(h);
+                Total -= res_price;
+                if(Total == 0) total.setVisible(false);
                 btn.setStyle("-fx-background-color:white;");
             }
         });
@@ -140,6 +159,8 @@ public class Court4 {
     @FXML
     private void initialize(){
         user = Session.getCurrentUser();
+        Total = 0;
+        total.setVisible(false);
         lb_header.setText("Đặt Lịch Sân 4");
         fld_date.setValue(LocalDate.now());
         fld_date.setDayCellFactory(picker -> new DateCell() {
@@ -168,6 +189,7 @@ public class Court4 {
         LichNgoaiLe = LoadDAO.loadAllLichNgoaiLe(picked_date, 4);
         LichDat = LoadDAO.loadLichDat(picked_date, 4);
         picked = new HashMap<>();
+        loadStatus();
         handle_btn(0);
         handle_btn(1);
         handle_btn(2);
@@ -195,24 +217,26 @@ public class Court4 {
         bt_confirm.setOnAction(e->{
             handleConfirm();
         });
-        loadStatus();
     }
     private void handleConfirm(){
         for(Integer i : picked.keySet()){
             System.out.println(i);
         }
+        double res_total = 0;
         for(int h = 0; h < 24; h++){
             if(picked.containsKey(h)){
+                res_total = pricePHourDAO.getPrice(DOW.getValue() + 1, h).getPrice();
                 String start = String.format("%02d:00", h);
                 int e = h + 1;
                 while(e < 24 && picked.containsKey(e)){
+                    res_total += pricePHourDAO.getPrice(DOW.getValue() + 1, e).getPrice();
                     e++;
                 }
                 String end = String.format("%02d:00", e);
                 if(e == 24){
                     end = "23:59";
                 }
-                boolean Add = Bookingdao.add(new Booking(user.getId(), 4, LocalDate.parse(picked_date), LocalTime.parse(start), LocalTime.parse(end), 0));
+                boolean Add = Bookingdao.add(new Booking(user.getId(), 4, LocalDate.parse(picked_date), LocalTime.parse(start), LocalTime.parse(end), res_total));
                 if(Add){
                     showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đặt sân thành công!");
                 }
