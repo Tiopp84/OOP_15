@@ -22,7 +22,7 @@ pom.xml.versionsBackup
 ### File Project Cụ thể (QUAN TRỌNG) ###
 # Bỏ qua file CSDL SQLite (file này được tạo khi chạy app)
 # Điều này ngăn xung đột CSDL giữa các thành viên
-badminton.db
+
 badminton.db-journal
 
 ### Hệ điều hành (OS Files) ###
