@@ -55,7 +55,6 @@ public class Court4 {
     private Map<Integer, LoadStatus> LichDat;
     private Map<Integer, Boolean> picked;
     private Price_pHourDAO pricePHourDAO = new Price_pHourDAO();
-    private DayOfWeek DOW;
 
     private Button hourToButton(int h) {
         switch (h) {
@@ -87,11 +86,9 @@ public class Court4 {
         }
     }
 
-
     private void loadStatus(){
         Total = 0;
         total.setVisible(false);
-        DOW = fld_date.getValue().getDayOfWeek(); // dayofweek
         for(int h = 0; h < 24; h++){
             Button btn = hourToButton(h);
             btn.setStyle("-fx-background-color: #FFFFFF;");
@@ -132,24 +129,34 @@ public class Court4 {
         }
     }
 
+    private double getPriceSafely(int hour) {
+        if (fld_date.getValue() == null) return 0;
+
+        int day_in_week = fld_date.getValue().getDayOfWeek().getValue() + 1;
+
+        Price_pHour priceData = pricePHourDAO.getPrice(day_in_week, hour);
+
+        if (priceData == null) {
+            return 0; // Trả về 0 nếu không tìm thấy giá
+        }
+        return priceData.getPrice();
+    }
+
 
     private void handle_btn(int h){
         Button btn = hourToButton(h);
         btn.setOnAction(e->{
-            DOW = fld_date.getValue().getDayOfWeek(); // dayofweek
-            int day_in_week = DOW.getValue() + 1;
-            double res_price = pricePHourDAO.getPrice(day_in_week, h).getPrice();
             if(!picked.containsKey(h)){
                 picked.put(h, true);
                 btn.setStyle("-fx-background-color: #50fff9;");
                 total.setVisible(true);
-                Total += res_price;
+                Total += getPriceSafely(h);
                 String text = String.format("Tổng tiền: %.0fVND", Total);
                 total.setText(text);
             }
             else{
                 picked.remove(h);
-                Total -= res_price;
+                Total -= getPriceSafely(h);
                 if(Total == 0) total.setVisible(false);
                 else{
                     String text = String.format("Tổng tiền: %.0fVND", Total);
@@ -175,8 +182,6 @@ public class Court4 {
 
                 LocalDate today = LocalDate.now();
                 LocalDate maxDay = today.plusDays(7);
-
-                // Disable các ngày < hôm nay hoặc > 7 ngày tới
                 if (date.isBefore(today) || date.isAfter(maxDay)) {
                     setDisable(true);
                     setStyle("-fx-background-color: #eee;");
@@ -209,11 +214,11 @@ public class Court4 {
         double res_total = 0;
         for(int h = 0; h < 24; h++){
             if(picked.containsKey(h)){
-                res_total = pricePHourDAO.getPrice(DOW.getValue() + 1, h).getPrice();
+                res_total = getPriceSafely(h);
                 String start = String.format("%02d:00", h);
                 int e = h + 1;
                 while(e < 24 && picked.containsKey(e)){
-                    res_total += pricePHourDAO.getPrice(DOW.getValue() + 1, e).getPrice();
+                    res_total += getPriceSafely(h);
                     e++;
                 }
                 String end = String.format("%02d:00", e);
@@ -228,10 +233,7 @@ public class Court4 {
                     showAlert(Alert.AlertType.ERROR, "Thất bại", "Đặt sân không thành công!");
                 }
                 for (int i = h; i < e; i++) {
-                    // RẤT QUAN TRỌNG: Loại bỏ giờ khỏi map sau khi đã cố gắng đặt
                     picked.remove(i);
-
-                    // Đặt lại màu trắng cho nút vừa được xác nhận
                     Button btn = hourToButton(i);
                     if (btn != null) {
                         btn.setStyle("-fx-background-color: white;");
