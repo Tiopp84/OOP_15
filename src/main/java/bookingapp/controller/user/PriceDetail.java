@@ -22,17 +22,17 @@ public class PriceDetail {
     private TableView<PriceTable> priceDetailTable;
 
     @FXML
-    private TableColumn<PriceTable, Integer> colDayStart;
+    private TableColumn<PriceTable, String> colDayStart;
 
     @FXML
-    private TableColumn<PriceTable, Integer> colDayEnd;
+    private TableColumn<PriceTable, String> colDayEnd;
     @FXML
     private TableColumn<PriceTable, String> colStartTime;
 
     @FXML
     private TableColumn<PriceTable, String> colEndTime;
     @FXML
-    private TableColumn<PriceTable, Float> colPrice;
+    private TableColumn<PriceTable, String> colPrice;
     @FXML
     public void initialize(){
         setPriceTableStartWeek();
@@ -46,13 +46,25 @@ public class PriceDetail {
         colPrice.setStyle("-fx-alignment: CENTER;");
 
 
-        colDayStart.setCellValueFactory(data ->
-                new SimpleIntegerProperty(data.getValue().getStart_day_in_week()).asObject()
-        );
+        colDayStart.setCellValueFactory(data ->{
+            int dayValue = data.getValue().getStart_day_in_week();
+            String day_in_week;
+            if(dayValue != 8){
+                day_in_week = String.format("T%d", dayValue);
+            }
+            else day_in_week = "CN";
+            return new SimpleStringProperty(day_in_week);
+        });
 
-        colDayEnd.setCellValueFactory(data ->
-                new SimpleIntegerProperty(data.getValue().getEnd_day_in_week()).asObject()
-        );
+        colDayEnd.setCellValueFactory(data ->{
+            int dayValue = data.getValue().getEnd_day_in_week();
+            String day_in_week;
+            if(dayValue != 8){
+                day_in_week = String.format("T%d", dayValue);
+            }
+            else day_in_week = "CN";
+            return new SimpleStringProperty(day_in_week);
+        });
 
         colStartTime.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().getStart_time().toString())
@@ -63,7 +75,7 @@ public class PriceDetail {
         );
 
         colPrice.setCellValueFactory(data ->
-                new SimpleFloatProperty(data.getValue().getPrice()).asObject()
+                new SimpleStringProperty(String.format("%.0f VND", data.getValue().getPrice()))
         );
     }
     private void loadTableStartWeek(){
