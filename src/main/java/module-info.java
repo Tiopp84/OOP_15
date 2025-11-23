@@ -11,6 +11,7 @@ module bookingapp {
     // Cần thiết để Java có thể kết nối với CSDL (SQLite)
     requires java.sql;
     requires javafx.base;
+    requires javafx.graphics;
 
     // Mở package controller (giữ nguyên)
     opens bookingapp.controller to javafx.fxml;

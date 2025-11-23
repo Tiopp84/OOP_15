@@ -5,8 +5,15 @@ import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Info {
     @FXML
@@ -25,26 +32,18 @@ public class Info {
         txtPassword.setText(user.getPassword());
     }
     @FXML
-    public void changePass(ActionEvent event){
-        String newUsername = txtUsername.getText();
-        String newPassword = txtPassword.getText();
-        if(newUsername.isEmpty() || newPassword.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thông báo"); // Tiêu đề cửa sổ
-            alert.setHeaderText(null);   // Không có header
-            alert.setContentText("Vui lòng nhập đầy đủ tài khoản và mật khẩu"); // Nội dung thông báo
-            alert.showAndWait(); // Hiển thị cửa sổ và chờ người dùng đóng
+    private void changePass(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/bookingapp/view/user/ChangePassword.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Đổi mật khẩu");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // cửa sổ modal, không cho thao tác với cửa sổ trước
+            stage.showAndWait(); // showAndWait nếu muốn chờ người dùng đóng
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        UserDAO dao=new UserDAO();
-        boolean success=dao.changePassword(newUsername, newPassword);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        if (success) {
-            alert.setContentText("Đổi thông tin thành công");
-        } else {
-            alert.setContentText("Đổi thông tin thất bại. Vui lòng kiểm tra lại username(Không được thay đỏi Username .");
-        }
-        alert.showAndWait();
     }
 }
