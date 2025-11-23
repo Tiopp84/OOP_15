@@ -68,4 +68,25 @@ public class PriceTableDAO {
             return false;
         }
     }
+    public List<PriceTable> getPrice(){
+        String sql="SELECT * FROM BangGia";
+        List<PriceTable> list = new ArrayList<>();
+        try(Connection conn =DatabaseManager.getConnection()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Integer id = rs.getInt("MaGia");
+                Integer ngayBatDauTrongTuan = rs.getInt("NgayBatDau");
+                Integer ngayKetThucTrongTuan = rs.getInt("NgayKetThuc");
+                String startTime = rs.getString("ThoiGianBatDau");
+                String endTime = rs.getString("ThoiGianKetThuc");
+                Float giamoigio = rs.getFloat("GiaMoiGio");
+                PriceTable priceTable=new PriceTable(id,ngayBatDauTrongTuan,ngayKetThucTrongTuan,LocalTime.parse(startTime),LocalTime.parse(endTime),giamoigio);
+                list.add(priceTable);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
 }

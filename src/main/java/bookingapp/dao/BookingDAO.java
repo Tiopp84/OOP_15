@@ -2,6 +2,7 @@ package bookingapp.dao;
 
 import bookingapp.db.DatabaseManager;
 import bookingapp.model.Booking;
+import bookingapp.util.Session;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -74,5 +75,30 @@ public class BookingDAO {
             e.printStackTrace();
             return false;
         }
+    }
+    public List<Booking> loadBooking(){
+        List<Booking> result = new ArrayList<>();
+        StringBuilder sql=new StringBuilder("select * from LichDat ");
+        StringBuilder join = new StringBuilder(" join San s on LichDat.MaSan = s.MaSan ");
+        StringBuilder where = new StringBuilder(" where 1=1 and User_id = "+ Session.getCurrentUser().getId());
+        sql.append(join);
+        sql.append(where);
+        try (Connection conn = DatabaseManager.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Booking booking = new Booking();
+                booking.setBookingDate(LocalDate.parse(rs.getString("Ngay")));
+                booking.setStartTime(LocalTime.parse(rs.getString("ThoiGianBatDau")));
+                booking.setEndTime(LocalTime.parse(rs.getString("ThoiGianKetThuc")));
+                booking.setTotalPrice(rs.getDouble("GiaLucDat"));
+                booking.setCourtName(rs.getString("TenSan"));
+                result.add(booking);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }
