@@ -26,7 +26,7 @@ public class Info {
     public void initialize(){
         loadinfo();
     }
-    private void loadinfo(){
+    public void loadinfo(){
         User user= Session.getCurrentUser();
         txtUsername.setText(user.getUsername());
         txtPassword.setText(user.getPassword());
@@ -36,7 +36,11 @@ public class Info {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/bookingapp/view/user/ChangePassword.fxml"));
             Parent root = fxmlLoader.load();
+            // Lấy controller của cửa sổ đổi mật khẩu
+            ChangePassword changePassCtrl = fxmlLoader.getController();
 
+            // Truyền chính controller này (Info) vào để nó gọi lại khi thành công
+            changePassCtrl.setParentController(this);
             Stage stage = new Stage();
             stage.setTitle("Đổi mật khẩu");
             stage.setScene(new Scene(root));
