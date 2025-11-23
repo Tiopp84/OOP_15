@@ -23,6 +23,9 @@ public class User {
         return username;
     }
 
+    public String getPassword() {return password;}
+
+
     // Các hàm Setters (nếu cần)
 
     public void setId(int id) {
