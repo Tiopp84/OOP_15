@@ -1,66 +1,71 @@
 package bookingapp.controller.admin;
 
+import bookingapp.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+
 import java.io.IOException;
 
 public class AdminMainController {
 
     @FXML
-    private ChoiceBox<String> choiceFunctions;
-
-    @FXML
     private BorderPane contentArea;
 
     @FXML
+    private Label Chaomung; // Label để hiển thị "Xin chào [Tên Admin]"
+
+    @FXML
     public void initialize() {
-        choiceFunctions.getItems().addAll(
-                "Quản lý người dùng",
-                "Quản lý sân",
-                "Quản lý bảng giá",
-                "Quản lý lịch đặt",
-                "Quản lý lịch ngoại lệ"
-        );
+        // Hiển thị dòng chào mừng dựa trên username từ session
+        if (Session.getCurrentUser() != null) {
+            Chaomung.setText("Xin chào " + Session.getCurrentUser().getUsername() + "!");
+        } else {
+            Chaomung.setText("Xin chào Admin!");
+        }
+
+        // Load trang mặc định: quản lý người dùng
+        loadView("userManagement.fxml");
+    }
+
+    // ------------ HANDLE BUTTONS ----------------
+
+    @FXML
+    private void handleManageUsers() {
+        loadView("userManagement.fxml");
     }
 
     @FXML
-    private void handleFunctionSelect() {
-        String selected = choiceFunctions.getValue();
-
-        if (selected == null) return;
-
-        switch (selected) {
-            case "Quản lý người dùng":
-                loadView("/bookingapp/view/admin/userManagement.fxml");
-                break;
-            // các chức năng khác bạn load tương tự
-
-            case "Quản lý sân":
-                loadView("/bookingapp/view/admin/courtManagement.fxml");
-                break;
-
-            case "Quản lý bảng giá":
-                loadView("/bookingapp/view/admin/priceManagement.fxml");
-                break;
-
-            case "Quản lý lịch đặt":
-                loadView("/bookingapp/view/admin/bookingManagement.fxml");
-                break;
-
-            case "Quản lý lịch ngoại lệ":
-                loadView("/bookingapp/view/admin/exceptionSchedule.fxml");
-                break;
-
-        }
+    private void handleManageCourts() {
+        loadView("courtManagement.fxml");
     }
 
-    private void loadView(String fxmlPath) {
+    @FXML
+    private void handleManageBookings() {
+        loadView("bookingManagement.fxml");
+    }
+
+    @FXML
+    private void handleManagePrice() {
+        loadView("priceManagement.fxml");
+    }
+
+    @FXML
+    private void handleLogout() {
+        System.out.println("Đăng xuất admin...");
+        Session.clearSession();
+        // TODO: chuyển về màn hình đăng nhập
+    }
+
+    // ------------ LOAD SUB UI ----------------
+
+    private void loadView(String fileName) {
         try {
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
-            contentArea.setCenter(view); // load vào vùng trung tâm
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookingapp/view/admin/" + fileName));
+            Parent view = loader.load(); // KHÔNG CAST
+            contentArea.setCenter(view); // set vào BorderPane
         } catch (IOException e) {
             e.printStackTrace();
         }
