@@ -86,5 +86,19 @@ public class UserDAO {
             return false;
         }
     }
+    public boolean changePassword2(Integer user_id, String new_password){
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, new_password);
+            pstmt.setInt(2, user_id);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 
