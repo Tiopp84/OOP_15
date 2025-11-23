@@ -1,0 +1,67 @@
+/* --- STYLE CHO TOÀN BỘ TABLEVIEW (Bảng) --- */
+.table-view {
+    /* Nền trắng sạch */
+    -fx-background-color: white;
+    /* Viền nhẹ xung quanh bảng */
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    /* Loại bỏ khoảng cách mặc định không cần thiết */
+    -fx-padding: 0;
+}
+
+/* Loại bỏ màu nền của header container để chỉ giữ màu cột */
+.table-view .column-header-background {
+    -fx-background-color: #F8F8F8; /* Nền xám rất nhạt */
+}
+
+/* --- STYLE CHO HEADER CỦA CÁC CỘT --- */
+.table-view .column-header {
+    /* Đảm bảo chiều cao header đủ lớn */
+    -fx-size: 35px;
+}
+
+/* Style chữ trong Header */
+.table-view .label {
+    -fx-text-fill: #333333; /* Màu chữ đen */
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER; /* Căn giữa chữ */
+    -fx-font-size: 13px;
+}
+
+/* --- STYLE CHO CÁC HÀNG (ROWS) --- */
+.table-row-cell {
+    -fx-background-color: white; /* Nền trắng cho các hàng */
+    -fx-border-color: #EEEEEE; /* Viền rất nhạt giữa các hàng */
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 0;
+}
+
+/* Hiệu ứng khi rê chuột qua hàng */
+.table-row-cell:hover {
+    -fx-background-color: #E8F5E9; /* Màu xanh lá nhạt nhẹ nhàng */
+    -fx-cursor: hand;
+}
+
+/* --- STYLE CHO CÁC Ô (CELLS) --- */
+
+/* Style cho tất cả các ô */
+.table-cell {
+    -fx-alignment: CENTER; /* Căn giữa nội dung trong ô */
+    -fx-text-fill: #555555; /* Màu chữ xám để dễ nhìn */
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+}
+
+/* Làm nổi bật cột Giá (tùy chọn) */
+.table-column:nth-child(6) .table-cell { /* Nhắm mục tiêu cột thứ 6: 'Giá/giờ' */
+    -fx-font-weight: bold;
+    -fx-text-fill: #388E3C; /* Màu xanh lá đậm */
+}
+.main-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 20px 0 10px 0;
+    -fx-text-fill: #333333;
+}

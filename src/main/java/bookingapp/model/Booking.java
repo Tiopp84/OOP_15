@@ -17,6 +17,7 @@ public class Booking {
     private LocalTime endTime;     // Lưu dưới dạng TEXT (ví dụ: "10:00")
     private double totalPrice;
 
+    private String courtName;
     /**
      * Constructor (hàm dựng)
      */
@@ -38,8 +39,17 @@ public class Booking {
         this.endTime = endTime;
         this.totalPrice = totalPrice;
     }
-
+    public Booking() {
+    }
     // Các hàm Getters
+
+    public String getCourtName() {
+        return courtName;
+    }
+
+    public void setCourtName(String courtName) {
+        this.courtName = courtName;
+    }
 
     public int getId() {
         return id;

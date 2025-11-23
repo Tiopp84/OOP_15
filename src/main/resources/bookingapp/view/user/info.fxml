@@ -5,16 +5,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookingapp.controller.user.Info" VBox.vgrow = "ALWAYS">
-   <children>
-      <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="58.0" HBox.hgrow="ALWAYS">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Thông tin tài khoản" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-   </children>
+    <children>
+        <HBox alignment="CENTER" maxWidth="Infinity" prefHeight="58.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Thông tin tài khoản" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </children>
+    <children>
+        <HBox spacing="10" alignment="CENTER" HBox.hgrow="ALWAYS">
+            <Label text="Tên tài khoản:" prefWidth="120"/>
+            <TextField fx:id="txtUsername" prefWidth="250" />
+        </HBox>
+        <HBox spacing="10" alignment="CENTER" prefHeight="NaN" HBox.hgrow="ALWAYS">
+            <Label text="Mật khẩu:" prefWidth="120"/>
+            <TextField fx:id="txtPassword" prefWidth="250" />
+        </HBox>
+        <HBox spacing="15" alignment="CENTER" prefHeight="NaN" HBox.hgrow="ALWAYS">
+            <Label prefWidth="120"/>
+            <Button fx:id="btnChangePassword" text="Đổi mật khẩu" prefWidth="150" onAction="#changePass"/>
+        </HBox>
+    </children>
 </VBox>
