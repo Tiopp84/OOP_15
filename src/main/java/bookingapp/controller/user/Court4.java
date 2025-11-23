@@ -174,6 +174,7 @@ public class Court4 {
         Total = 0;
         total.setVisible(false);
         lb_header.setText("Đặt Lịch Sân 4");
+        fld_date.getEditor().setDisable(true);
         fld_date.setValue(LocalDate.now());
         fld_date.setDayCellFactory(picker -> new DateCell() {
             @Override
