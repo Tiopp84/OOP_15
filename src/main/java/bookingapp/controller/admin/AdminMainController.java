@@ -1,5 +1,6 @@
 package bookingapp.controller.admin;
 
+import bookingapp.App;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,9 +54,10 @@ public class AdminMainController {
     }
 
     @FXML
-    private void handleLogout() {
+    private void handleLogout() throws IOException {
         System.out.println("Đăng xuất admin...");
         Session.clearSession();
+        App.setRoot("welcome.fxml");
         // TODO: chuyển về màn hình đăng nhập
     }
 
