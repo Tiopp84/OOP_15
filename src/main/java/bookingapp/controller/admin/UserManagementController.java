@@ -40,6 +40,8 @@ public class UserManagementController {
                 list.add(new User(
                         rs.getInt("id"),
                         rs.getString("username"),
+                        rs.getString("full_name"),
+                        rs.getString("phone_number"),
                         rs.getString("password"),
                         rs.getString("role")
                 ));
@@ -66,12 +68,12 @@ public class UserManagementController {
 
         try {
             String[] parts = result.get().split(",");
-            if (parts.length != 3) {
+            if (parts.length != 5) {
                 showAlert("Lỗi", "Định dạng không hợp lệ!", Alert.AlertType.ERROR);
                 return;
             }
 
-            boolean success = userDAO.addUser(parts[0], parts[1], parts[2]);
+            boolean success = userDAO.addUser(parts[0], parts[1], parts[2], parts[3], parts[4]);
 
             if (success) {
                 showAlert("Thành công", "Thêm người dùng thành công!", Alert.AlertType.INFORMATION);
