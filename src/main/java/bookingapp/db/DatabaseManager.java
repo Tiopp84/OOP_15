@@ -30,6 +30,8 @@ public class DatabaseManager {
         String createUserTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
                 " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " username TEXT NOT NULL UNIQUE," +
+                " full_name TEXT NOT NULL,"+
+                " phone_number TEXT NOT NULL," +
                 " password TEXT NOT NULL," +
                 " role TEXT NOT NULL" +
                 ");";
@@ -80,8 +82,8 @@ public class DatabaseManager {
                 ");";
 
         // --- Chèn admin mặc định nếu chưa tồn tại ---
-        String insertAdminSQL = "INSERT INTO users(username, password, role) " +
-                "SELECT 'admin', 'admin123', 'admin' " +
+        String insertAdminSQL = "INSERT INTO users(username, full_name, phone_number, password, role) " +
+                "SELECT 'admin', 'admin', '0123456789', 'admin123', 'admin' " +
                 "WHERE NOT EXISTS (SELECT 1 FROM users WHERE username='admin');";
         // --- Cập nhật admin nếu đã tồn tại để đảm bảo password là 'admin123' ---
         String updateAdminSQL = "UPDATE users SET password='admin123', role='admin' WHERE username='admin';";
