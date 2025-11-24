@@ -47,9 +47,9 @@ public class CourtManagementController {
                 btnClose.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
                 btnMaintain.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white;");
 
-                btnActive.setOnAction(e -> updateStatus("Hoạt động"));
-                btnClose.setOnAction(e -> updateStatus("Đóng"));
-                btnMaintain.setOnAction(e -> updateStatus("Bảo trì"));
+                btnActive.setOnAction(e -> updateStatus("HoatDong"));
+                btnClose.setOnAction(e -> updateStatus("Dong"));
+                btnMaintain.setOnAction(e -> updateStatus("BaoTri"));
             }
 
             private void updateStatus(String status) {
@@ -57,7 +57,7 @@ public class CourtManagementController {
                 boolean ok = courtDAO.updateStatus(court.getId(), status);
 
                 if (ok) {
-                    alert("Thành công", "Đã cập nhật trạng thái sân!", Alert.AlertType.INFORMATION);
+                    //alert("Thành công", "Đã cập nhật trạng thái sân!", Alert.AlertType.INFORMATION);
                     loadCourts();
                 } else {
                     alert("Lỗi", "Không thể cập nhật trạng thái!", Alert.AlertType.ERROR);
