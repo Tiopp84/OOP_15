@@ -2,37 +2,76 @@ package bookingapp.dao;
 
 import bookingapp.db.DatabaseManager;
 import bookingapp.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDAO {
 
-    public User validateUser(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    // Lấy tất cả users
+    public ObservableList<User> getAllUsers() {
+        ObservableList<User> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM users";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("full_name"),
+                        rs.getString("phone_number"),
+                        rs.getString("password"),
+                        rs.getString("role")
+                ));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Lỗi load users: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    // Tìm kiếm users theo username / full_name / phone_number
+    public ObservableList<User> searchUsers(String keyword) {
+        ObservableList<User> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM users WHERE username LIKE ? OR full_name LIKE ? OR phone_number LIKE ?";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            String kw = "%" + keyword + "%";
+            pstmt.setString(1, kw);
+            pstmt.setString(2, kw);
+            pstmt.setString(3, kw);
 
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("full_name"), rs.getString("phone_number"), rs.getString("password"), rs.getString("role"));
-                return user;
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new User(
+                            rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("full_name"),
+                            rs.getString("phone_number"),
+                            rs.getString("password"),
+                            rs.getString("role")
+                    ));
+                }
             }
+
         } catch (SQLException e) {
-            System.err.println("Lỗi khi xác thực người dùng: " + e.getMessage());
+            System.err.println("Lỗi search users: " + e.getMessage());
             e.printStackTrace();
         }
 
-        return null;
+        return list;
     }
 
+    // Thêm user
     public boolean addUser(String username, String full_name, String phone_number, String password, String role) {
         String sql = "INSERT INTO users(username, full_name, phone_number, password, role) VALUES(?, ?, ?, ?, ?)";
 
@@ -45,26 +84,26 @@ public class UserDAO {
             pstmt.setString(4, password);
             pstmt.setString(5, role);
 
-            int rowsAffected = pstmt.executeUpdate();// dung cho cac truy van khong tra ve du lieu
-            // tra ve so luong dong bi thay doi trong csdl
-
-            return rowsAffected > 0; // == 1
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
-            // Lỗi SQL (ví dụ: UNIQUE constraint failed - username đã tồn tại)
             System.err.println("Lỗi khi thêm người dùng: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    public boolean deleteUser(String username){
+    // Xóa user theo username
+    public boolean deleteUser(String username) {
         String sql = "DELETE FROM users WHERE username = ?";
+
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, username);
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0; // == 1
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             System.err.println("Lỗi khi xóa người dùng: " + e.getMessage());
@@ -73,34 +112,71 @@ public class UserDAO {
         }
     }
 
-    public boolean changePassword(String username, String new_password){
-        String sql = "UPDATE users SET password = ? where username = ?";
+    // Đổi mật khẩu theo username
+    public boolean changePassword(String username, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE username = ?";
+
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, new_password);
+
+            pstmt.setString(1, newPassword);
             pstmt.setString(2, username);
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected == 1;
 
         } catch (SQLException e) {
-            System.err.println("Lỗi khi xóa người dùng: " + e.getMessage());
+            System.err.println("Lỗi khi đổi mật khẩu: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
-    public boolean changePassword2(Integer user_id, String new_password){
+
+    public boolean changePassword2(int id, String newPassword) {
         String sql = "UPDATE users SET password = ? WHERE id = ?";
+
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, new_password);
-            pstmt.setInt(2, user_id);
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected == 1;
+
+            pstmt.setString(1, newPassword);
+            pstmt.setInt(2, id);
+
+            return pstmt.executeUpdate() == 1;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Lỗi khi đổi mật khẩu theo ID: " + e.getMessage());
             return false;
         }
     }
-}
 
+
+    // Validate login
+    public User validateUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("full_name"),
+                            rs.getString("phone_number"),
+                            rs.getString("password"),
+                            rs.getString("role")
+                    );
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi xác thực người dùng: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+}
