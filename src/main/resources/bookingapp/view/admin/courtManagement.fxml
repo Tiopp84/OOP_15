@@ -20,13 +20,8 @@
             <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
             <TableColumn fx:id="colName" text="Tên sân" prefWidth="200"/>
             <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="150"/>
+            <TableColumn fx:id="colActions" text="Hành động" prefWidth="280"/>
         </columns>
     </TableView>
-
-    <HBox spacing="10">
-        <Button text="Thêm sân" onAction="#handleAddCourt"/>
-        <Button text="Xóa sân" onAction="#handleDeleteCourt"/>
-        <Button text="Đổi trạng thái" onAction="#handleChangeStatus"/>
-    </HBox>
 
 </VBox>

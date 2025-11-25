@@ -10,18 +10,17 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-/**
- * Controller cho register.fxml.
- * ĐÃ CẬP NHẬT để sử dụng CSDL.
- */
+
 public class RegisterController {
 
     @FXML
     private TextField usernameField;
+    @FXML private TextField fld_fullname;
+    @FXML private TextField fld_phonenumber;
     @FXML
     private PasswordField passwordField;
     @FXML
-    private PasswordField confirmPasswordField; // Ô xác nhận mật khẩu
+    private PasswordField confirmPasswordField;
     @FXML
     private Button registerButton;
     @FXML
@@ -35,18 +34,17 @@ public class RegisterController {
         this.userDAO = new UserDAO();
     }
 
-    /**
-     * Xử lý khi nhấn nút "Đăng ký".
-     * Sẽ gọi UserDAO để tạo người dùng mới.
-     */
+
     @FXML
     private void handleRegister() throws IOException {
         String username = usernameField.getText();
+        String full_name = fld_fullname.getText();
+        String phone_number = fld_phonenumber.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
         // 1. Kiểm tra các trường
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (username.isEmpty() || full_name.isEmpty() || phone_number.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Lỗi Đăng ký", "Vui lòng nhập đầy đủ thông tin!");
             return;
         }
@@ -58,13 +56,13 @@ public class RegisterController {
         }
 
         // 3. Gọi DAO để thêm người dùng
-        boolean success = userDAO.addUser(username, password, "user");
+        // Format FUllNAME
+        boolean success = userDAO.addUser(username,full_name, phone_number, password, "user");
 
         // 4. Kiểm tra kết quả từ CSDL
         if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công! \nVui lòng quay lại để đăng nhập.");
-            // Tùy chọn: Tự động chuyển về trang đăng nhập
-            // handleBackToLogin();
+            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công!");
+            App.setRoot("welcome.fxml");
         } else {
             // Lỗi này có thể xảy ra nếu CSDL bị lỗi, hoặc tên 'username' đã tồn tại
             // (vì chúng ta đã đặt 'username' là UNIQUE trong CSDL)
@@ -72,18 +70,13 @@ public class RegisterController {
         }
     }
 
-    /**
-     * Xử lý khi nhấn nút "Quay về".
-     * Chuyển về màn hình welcome.fxml.
-     */
+
     @FXML
     private void handleBackToLogin() throws IOException {
         App.setRoot("welcome.fxml");
     }
 
-    /**
-     * Hàm tiện ích (helper) để hiển thị Alert
-     */
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

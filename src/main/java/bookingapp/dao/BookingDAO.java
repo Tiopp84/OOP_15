@@ -22,12 +22,13 @@ public class BookingDAO {
 
             while (rs.next()) {
                 list.add(new Booking(
-                        rs.getInt("userId"),
-                        rs.getInt("courtId"),
-                        LocalDate.parse(rs.getString("bookingDate")),
-                        LocalTime.parse(rs.getString("startTime")),
-                        LocalTime.parse(rs.getString("endTime")),
-                        rs.getDouble("totalPrice")
+                        rs.getInt("MaDatLich"),
+                        rs.getInt("User_Id"),
+                        rs.getInt("MaSan"),
+                        LocalDate.parse(rs.getString("Ngay")),
+                        LocalTime.parse(rs.getString("ThoiGianBatDau")),
+                        LocalTime.parse(rs.getString("ThoiGianKetThuc")),
+                        rs.getDouble("GiaLucDat")
                 ));
             }
 
@@ -38,7 +39,7 @@ public class BookingDAO {
     }
 
     public boolean delete(int id) {
-        String sql = "DELETE FROM bookings WHERE id = ?";
+        String sql = "DELETE FROM LichDat WHERE MaDatLich = ?";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -65,13 +66,11 @@ public class BookingDAO {
             pstmt.setString(5, booking.getEndTime());
             pstmt.setDouble(6, booking.getTotalPrice());
 
-            int rowsAffected = pstmt.executeUpdate();// dung cho cac truy van khong tra ve du lieu
-            // tra ve so luong dong bi thay doi trong csdl
+            int rowsAffected = pstmt.executeUpdate();
 
             return rowsAffected > 0; // == 1
 
         } catch (SQLException e) {
-            // Lỗi SQL (ví dụ: UNIQUE constraint failed - username đã tồn tại)
             System.err.println("Lỗi khi thêm Lịch Đặt: " + e.getMessage());
             e.printStackTrace();
             return false;
