@@ -7,6 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class BookingManagementController {
 
     @FXML private TableView<Booking> table;
@@ -24,13 +27,35 @@ public class BookingManagementController {
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getId()));
-        colUser.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getUserId()));
-        colCourt.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCourtId()));
-        colDate.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getBookingDate()));
-        colStart.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getStartTime()));
-        colEnd.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEndTime()));
-        colPrice.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTotalPrice()));
+        colId.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getId()));
+        colUser.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getUserId()));
+        colCourt.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCourtId()));
+        colDate.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getBookingDate()));
+        colStart.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getStartTime()));
+        colEnd.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleStringProperty(data.getValue().getEndTime()));
+        colPrice.setCellValueFactory(data ->
+                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTotalPrice()));
+
+        // ===== Format VND =====
+        NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        colPrice.setCellFactory(column -> new TableCell<Booking, Double>() {
+            @Override
+            protected void updateItem(Double value, boolean empty) {
+                super.updateItem(value, empty);
+
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(vndFormat.format(value));  // Ví dụ: 120.000 ₫
+                }
+            }
+        });
 
         loadData();
     }

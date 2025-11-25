@@ -6,7 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.text.NumberFormat;
 import java.time.LocalTime;
+import java.util.Locale;
 import java.util.Optional;
 
 public class PriceManagementController {
@@ -17,7 +19,7 @@ public class PriceManagementController {
     @FXML private TableColumn<PriceTable, Integer> colEnd_day;
     @FXML private TableColumn<PriceTable, String> colStart;
     @FXML private TableColumn<PriceTable, String> colEnd;
-    @FXML private TableColumn<PriceTable, Float> colPrice;
+    @FXML private TableColumn<PriceTable, String> colPrice; // đổi sang String
 
     private PriceTableDAO dao = new PriceTableDAO();
 
@@ -28,7 +30,13 @@ public class PriceManagementController {
         colEnd_day.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getEnd_day_in_week()).asObject());
         colStart.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getStart_time().toString()));
         colEnd.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getEnd_time().toString()));
-        colPrice.setCellValueFactory(p -> new javafx.beans.property.SimpleFloatProperty(p.getValue().getPrice()).asObject());
+
+        // ⭐ Format tiền VND
+        colPrice.setCellValueFactory(p -> {
+            NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            String formattedPrice = vndFormat.format(p.getValue().getPrice());
+            return new javafx.beans.property.SimpleStringProperty(formattedPrice);
+        });
 
         loadData();
     }
@@ -41,15 +49,15 @@ public class PriceManagementController {
     private void handleAdd() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Thêm bảng giá");
-        dialog.setHeaderText("Nhập: Ngày bắt đầu, Ngày kết thúc,Bắt đầu,Kết thúc,Giá");
-        dialog.setContentText("VD: 2,6,08:00,10:00,100000 (T2 -> CN ~ 2 -> 8)");
+        dialog.setHeaderText("Nhập: Ngày bắt đầu, Ngày kết thúc, Bắt đầu, Kết thúc, Giá");
+        dialog.setContentText("VD: 2,6,08:00,10:00,100000");
 
         Optional<String> result = dialog.showAndWait();
         if (result.isEmpty()) return;
 
         String[] parts = result.get().split(",");
         if (parts.length != 5) {
-            showAlert("Bạn phải nhập dạng: Day,HH:mm,HH:mm,Price", Alert.AlertType.ERROR);
+            showAlert("Bạn phải nhập dạng: DayStart,DayEnd,HH:mm,HH:mm,Price", Alert.AlertType.ERROR);
             return;
         }
 
