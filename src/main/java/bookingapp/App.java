@@ -29,7 +29,6 @@ public class App extends Application {
                 //App.class.getResource("/bookingapp/view/welcome.fxml")
                 App.class.getResource("/bookingapp/view/user/mainLayout.fxml")
                 //App.class.getResource("/bookingapp/view/admin/adminmainWindow.fxml")
-
         );
 
         Parent root = fxmlLoader.load();
