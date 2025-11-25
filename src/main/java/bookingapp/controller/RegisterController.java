@@ -10,10 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-/**
- * Controller cho register.fxml.
- * ĐÃ CẬP NHẬT để sử dụng CSDL.
- */
+
 public class RegisterController {
 
     @FXML
