@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.text.NumberFormat;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class BookingManagementController {
@@ -23,32 +23,39 @@ public class BookingManagementController {
     @FXML private TableColumn<Booking, String> colEnd;
     @FXML private TableColumn<Booking, Double> colPrice;
 
-    @FXML private DatePicker datePicker;
+    @FXML private DatePicker dpSearchDate;
+    @FXML private TextField txtSearchUser;
+    @FXML private TextField txtSearchCourt;
 
     private final BookingDAO dao = new BookingDAO();
     private final ObservableList<Booking> list = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-
-        // ===== Set các cột =====
         colId.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getId()));
+
         colUser.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getUserId()));
+
         colCourt.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCourtId()));
+
         colDate.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getBookingDate()));
+
         colStart.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getStartTime()));
+
         colEnd.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleStringProperty(data.getValue().getEndTime()));
+
         colPrice.setCellValueFactory(data ->
                 new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTotalPrice()));
 
-        // ===== Format VND =====
+        // Format tiền VND
         NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+
         colPrice.setCellFactory(column -> new TableCell<Booking, Double>() {
             @Override
             protected void updateItem(Double value, boolean empty) {
@@ -56,61 +63,77 @@ public class BookingManagementController {
                 if (empty || value == null) {
                     setText(null);
                 } else {
-                    setText(vndFormat.format(value)); // VD: 120.000 ₫
+                    setText(vndFormat.format(value));
                 }
             }
         });
 
-        // ===== Load dữ liệu ban đầu =====
         loadData();
     }
 
-    // ===== Load dữ liệu từ database =====
+    // ====== Load danh sách ======
     @FXML
     public void loadData() {
         list.setAll(dao.getAll());
         table.setItems(list);
+
+        // Reset form tìm kiếm
+        dpSearchDate.setValue(null);
+        txtSearchUser.clear();
+        txtSearchCourt.clear();
     }
 
-    // ===== Tìm kiếm theo ngày =====
+    // ====== Tìm kiếm theo ngày, user, sân ======
     @FXML
     public void handleSearch() {
-        if (datePicker.getValue() == null) {
-            table.setItems(list); // nếu chưa chọn ngày → hiện tất cả
+
+        ObservableList<Booking> filtered = FXCollections.observableArrayList();
+
+        String userText = txtSearchUser.getText().trim();
+        String courtText = txtSearchCourt.getText().trim();
+
+        Integer userId = null;
+        Integer courtId = null;
+
+        try {
+            if (!userText.isEmpty()) userId = Integer.parseInt(userText);
+            if (!courtText.isEmpty()) courtId = Integer.parseInt(courtText);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.WARNING, "User ID hoặc Court ID phải là số").show();
             return;
         }
 
-        ObservableList<Booking> filtered = FXCollections.observableArrayList();
-        String selectedDate = datePicker.getValue().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate date = dpSearchDate.getValue();
 
         for (Booking b : list) {
-            if (b.getBookingDate().equals(selectedDate)) {
-                filtered.add(b);
-            }
+            boolean match = true;
+
+            if (userId != null && b.getUserId() != userId)
+                match = false;
+
+            if (courtId != null && b.getCourtId() != courtId)
+                match = false;
+
+            if (date != null && !b.getBookingDate().equals(date.toString()))
+                match = false;
+
+            if (match) filtered.add(b);
         }
 
         table.setItems(filtered);
     }
 
-    // ===== Làm mới =====
-    @FXML
-    public void handleRefresh() {
-        datePicker.setValue(null); // xóa ngày
-        loadData();                // load lại dữ liệu từ database
-    }
-
-    // ===== Xóa lịch =====
+    // ====== Xóa lịch ======
     @FXML
     public void handleDelete() {
         Booking selected = table.getSelectionModel().getSelectedItem();
-
         if (selected == null) {
             new Alert(Alert.AlertType.WARNING, "Vui lòng chọn lịch để xóa").show();
             return;
         }
 
         if (dao.delete(selected.getId())) {
-            handleRefresh();
+            loadData();
             new Alert(Alert.AlertType.INFORMATION, "Đã xóa lịch đặt").show();
         } else {
             new Alert(Alert.AlertType.ERROR, "Không thể xóa lịch").show();
