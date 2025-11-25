@@ -8,7 +8,7 @@
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="bookingapp.controller.admin.BookingManagementController"
-      stylesheets="@../assets/images/style.css">
+      stylesheets="@../../assets/style.css">
 
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>
