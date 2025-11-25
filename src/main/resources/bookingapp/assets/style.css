@@ -186,3 +186,27 @@
     -fx-padding: 0; /* Không có padding nội tại */
     -fx-text-fill: transparent; /* Ẩn chữ nếu có */
 }
+
+/* Chỉnh style chung cho DatePicker */
+.date-picker {
+    -fx-font-size: 14px;        /* chữ trong ô nhỏ hơn */
+    -fx-pref-height: 30px;      /* chiều cao ô DatePicker */
+}
+
+/* Chỉnh nút sang trái/sang phải (arrow button) */
+.date-picker .arrow-button {
+    -fx-background-color: transparent; /* bỏ màu nền */
+    -fx-padding: 0;                    /* thu gọn padding */
+    -fx-shape: "M0 0 L4 4 L0 8 Z";    /* hình mũi tên nhỏ */
+}
+
+/* Chữ hiển thị tháng/năm */
+.date-picker .text {
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+}
+
+/* Popup calendar */
+.date-picker-popup .month-year-pane {
+    -fx-font-size: 14px;
+}

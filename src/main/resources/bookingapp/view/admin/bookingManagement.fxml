@@ -4,9 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="12" xmlns="http://javafx.com/javafx/21"
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="bookingapp.controller.admin.BookingManagementController">
+      fx:controller="bookingapp.controller.admin.BookingManagementController"
+      stylesheets="@../../assets/style.css">
 
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>
@@ -15,6 +17,24 @@
     <Label text="Quản lý lịch đặt"
            style="-fx-font-size: 20px; -fx-font-weight: bold"/>
 
+    <!-- ===== Khung tìm kiếm ===== -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+
+        <DatePicker fx:id="dpSearchDate" promptText="Ngày đặt"/>
+
+        <TextField fx:id="txtSearchUser"
+                   promptText="User ID" prefWidth="100"/>
+
+        <TextField fx:id="txtSearchCourt"
+                   promptText="Mã sân" prefWidth="100"/>
+
+        <Button text="Tìm kiếm" onAction="#handleSearch"/>
+
+        <Button text="Làm mới" onAction="#loadData"/>
+
+    </HBox>
+
+    <!-- ===== Bảng dữ liệu ===== -->
     <TableView fx:id="table" prefHeight="350">
         <columns>
             <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
@@ -29,7 +49,6 @@
 
     <HBox spacing="10">
         <Button text="Xóa lịch" onAction="#handleDelete"/>
-        <Button text="Làm mới" onAction="#loadData"/>
     </HBox>
 
 </VBox>
