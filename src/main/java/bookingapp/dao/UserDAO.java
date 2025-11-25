@@ -9,6 +9,29 @@ import java.sql.*;
 
 public class UserDAO {
 
+    public User validateUser(String username, String password) {
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(rs.getInt("id"), rs.getString("username"), rs.getString("full_name"), rs.getString("phone_number"), rs.getString("password"), rs.getString("role"));
+                return user;
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi xác thực người dùng: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     // Lấy tất cả users
     public ObservableList<User> getAllUsers() {
         ObservableList<User> list = FXCollections.observableArrayList();
@@ -148,35 +171,4 @@ public class UserDAO {
         }
     }
 
-
-    // Validate login
-    public User validateUser(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return new User(
-                            rs.getInt("id"),
-                            rs.getString("username"),
-                            rs.getString("full_name"),
-                            rs.getString("phone_number"),
-                            rs.getString("password"),
-                            rs.getString("role")
-                    );
-                }
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Lỗi khi xác thực người dùng: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }
