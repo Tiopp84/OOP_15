@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -170,5 +172,35 @@ public class UserDAO {
             return false;
         }
     }
-
+    public boolean updateUser(int id,String full_name, String phone_number) {
+        if ((full_name == null && phone_number == null)||(full_name == "" && phone_number == "")) {
+            return false;
+        }
+        List<Object> params = new ArrayList<>();
+        StringBuilder sql=new StringBuilder("UPDATE users SET ");
+        StringBuilder where=new StringBuilder();
+        if (full_name != null && full_name != "") {
+            where.append(" full_name = ?,");
+            params.add(full_name);
+        }
+        if (phone_number != null && phone_number != "") {
+            where.append(" phone_number = ?,");
+            params.add(phone_number);
+        }
+        where.deleteCharAt(where.length() - 1);
+        where.append(" where id = ?");
+        params.add(id);
+        sql.append(where);
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())){
+            for (int i = 0; i < params.size(); i++) {
+                pstmt.setObject(i + 1, params.get(i));
+            }
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+        catch (SQLException e){
+             return false;
+        }
+    }
 }

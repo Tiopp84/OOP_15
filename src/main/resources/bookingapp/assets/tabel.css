@@ -65,3 +65,28 @@
     -fx-padding: 20px 0 10px 0;
     -fx-text-fill: #333333;
 }
+
+/* Nút Xóa nhỏ gọn, vừa chữ "Xóa", đẹp hiện đại */
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;           /* Chữ nhỏ hơn một chút */
+    -fx-padding: 4 12 4 12;        /* Cao 24px, rộng vừa đủ */
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-cursor: hand;
+    -fx-pref-width: 50px;          /* Rộng vừa đủ cho chữ "Xóa" */
+    -fx-min-width: 50px;
+    -fx-max-width: 50px;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.delete-button:disabled {
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: #bdc3c7;
+    -fx-opacity: 0.7;
+}
