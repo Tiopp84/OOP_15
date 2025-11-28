@@ -76,18 +76,28 @@ public class BookingDAO {
             return false;
         }
     }
-    public List<Booking> loadBooking(){
+    public void normalQuery(String name,LocalDate startDate,StringBuilder where){
+        if (name!=null&&name!=""){
+            where.append(" AND TenSan = '"+name+"' ");
+        }
+        if (startDate!=null){
+            where.append(" AND Ngay = '"+String.valueOf(startDate)+"' ");
+        }
+    }
+    public List<Booking> getBooking(String name,LocalDate startDate){
         List<Booking> result = new ArrayList<>();
         StringBuilder sql=new StringBuilder("select * from LichDat ");
         StringBuilder join = new StringBuilder(" join San s on LichDat.MaSan = s.MaSan ");
         StringBuilder where = new StringBuilder(" where 1=1 and User_id = "+ Session.getCurrentUser().getId());
         sql.append(join);
+        normalQuery(name,startDate,where);
         sql.append(where);
         try (Connection conn = DatabaseManager.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql.toString());
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 Booking booking = new Booking();
+                booking.setId(rs.getInt("MaDatLich"));
                 booking.setBookingDate(LocalDate.parse(rs.getString("Ngay")));
                 booking.setStartTime(LocalTime.parse(rs.getString("ThoiGianBatDau")));
                 booking.setEndTime(LocalTime.parse(rs.getString("ThoiGianKetThuc")));
