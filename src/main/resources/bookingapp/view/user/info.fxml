@@ -3,52 +3,92 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 
 <VBox maxHeight="Infinity" maxWidth="Infinity"
-      spacing="18" style="-fx-background-color: white; -fx-padding: 30 40 40 40;"
-      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="32" alignment="CENTER"
+      style="-fx-background-color: #f8f9fa;"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="bookingapp.controller.user.Info">
 
-    <!-- Tiêu đề -->
-    <Label text="Thông tin tài khoản" alignment="CENTER"
-           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
-        <padding>
-            <Insets bottom="20"/>
-        </padding>
+    <Label text="Thông tin tài khoản"
+           alignment="CENTER"
+           style="-fx-font-size: 28px; -fx-font-weight: 800; -fx-text-fill: #2c3e50;">
+        <padding><Insets bottom="20"/></padding>
     </Label>
 
-    <!-- Dòng Tên tài khoản -->
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <Label text="Tên tài khoản:" minWidth="120" prefWidth="120"/>
-        <TextField fx:id="txtUsername" editable="false" HBox.hgrow="ALWAYS"/>
-    </HBox>
+    <VBox spacing="20" maxWidth="580"
+          style="-fx-background-color: white; -fx-background-radius: 16;
+                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 8);
+                 -fx-padding: 40;">
 
-    <!-- Dòng Mật khẩu -->
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <Label text="Mật khẩu:" minWidth="120" prefWidth="120"/>
-        <TextField fx:id="txtPassword" editable="false" promptText="••••••••" HBox.hgrow="ALWAYS"/>
-    </HBox>
+        <!-- Tên tài khoản -->
+        <GridPane hgap="24" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints percentWidth="65"/>
+            </columnConstraints>
+            <Label text="Tên tài khoản" style="-fx-font-size: 15px; -fx-text-fill: #636e72; -fx-font-weight: bold;" GridPane.columnIndex="0"/>
+            <Label fx:id="lblUsername" text="Chưa tải dữ liệu"
+                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1e272e;
+                          -fx-background-color: #e9ecef; -fx-background-radius: 16;
+                          -fx-padding: 14 32 14 28; -fx-border-radius: 16;
+                          -fx-border-color: #ced4da; -fx-border-width: 1.5;"
+                   alignment="CENTER_LEFT" GridPane.columnIndex="1"
+                   maxWidth="Infinity" GridPane.hgrow="ALWAYS"/>
+        </GridPane>
 
-    <!-- Dòng Tên đầy đủ -->
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <Label text="Tên đầy đủ:" minWidth="120" prefWidth="120"/>
-        <TextField fx:id="txtFullname" HBox.hgrow="ALWAYS"/>
-    </HBox>
+        <!-- Tên đầy đủ -->
+        <GridPane hgap="24" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints percentWidth="65"/>
+            </columnConstraints>
+            <Label text="Tên đầy đủ" style="-fx-font-size: 15px; -fx-text-fill: #636e72; -fx-font-weight: bold;" GridPane.columnIndex="0"/>
+            <Label fx:id="lblFullname" text="Chưa tải dữ liệu"
+                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1e272e;
+                          -fx-background-color: #e9ecef; -fx-background-radius: 16;
+                          -fx-padding: 14 32 14 28; -fx-border-radius: 16;
+                          -fx-border-color: #ced4da; -fx-border-width: 1.5;"
+                   alignment="CENTER_LEFT" GridPane.columnIndex="1"
+                   maxWidth="Infinity" GridPane.hgrow="ALWAYS"/>
+        </GridPane>
 
-    <!-- Dòng Số điện thoại -->
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <Label text="Số điện thoại:" minWidth="120" prefWidth="120"/>
-        <TextField fx:id="txtNumberPhone" HBox.hgrow="ALWAYS"/>
-    </HBox>
+        <!-- Số điện thoại -->
+        <GridPane hgap="24" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints percentWidth="65"/>
+            </columnConstraints>
+            <Label text="Số điện thoại" style="-fx-font-size: 15px; -fx-text-fill: #636e72; -fx-font-weight: bold;" GridPane.columnIndex="0"/>
+            <Label fx:id="lblNumberPhone" text="Chưa tải dữ liệu"
+                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1e272e;
+                          -fx-background-color: #e9ecef; -fx-background-radius: 16;
+                          -fx-padding: 14 32 14 28; -fx-border-radius: 16;
+                          -fx-border-color: #ced4da; -fx-border-width: 1.5;"
+                   alignment="CENTER_LEFT" GridPane.columnIndex="1"
+                   maxWidth="Infinity" GridPane.hgrow="ALWAYS"/>
+        </GridPane>
 
-    <!-- Hai nút căn giữa đẹp -->
-    <HBox alignment="CENTER" spacing="20" prefHeight="50">
-        <Button fx:id="btnChangePassword" text="Đổi mật khẩu"
-                prefWidth="140" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        <Button fx:id="btnChangeInfo" text="Cập nhật thông tin"
-                prefWidth="160" onAction="#updateInfo"
-                style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    </HBox>
+        <!-- Hai nút ĐẸP - DÀI - ĐỀU - HIỆN ĐỦ CHỮ -->
+        <HBox alignment="CENTER" spacing="24" style="-fx-padding: 30 0 0 0;">
+            <Button fx:id="btnChangePassword"
+                    text="Đổi mật khẩu"
+                    minWidth="180" prefWidth="180" maxWidth="180"
+                    prefHeight="56"
+                    style="-fx-background-color: #f39c12; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-font-size: 16px;
+                           -fx-background-radius: 16; -fx-cursor: hand;"
+                    onAction="#changePass"/>
 
+            <Button fx:id="btnChangeInfo"
+                    text="Cập nhật thông tin"
+                    minWidth="240" prefWidth="240" maxWidth="240"
+                    prefHeight="56"
+                    style="-fx-background-color: #e67e22; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-font-size: 16px;
+                           -fx-background-radius: 16; -fx-cursor: hand;"
+                    onAction="#updateInfo"/>
+        </HBox>
+
+    </VBox>
 </VBox>

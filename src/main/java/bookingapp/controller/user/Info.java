@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,27 +17,18 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Info {
-    @FXML
-    private TextField txtUsername;
-
-    @FXML
-    private TextField txtPassword;
-
-    @FXML
-    private TextField txtFullname;
-
-    @FXML
-    private TextField txtNumberPhone;
+    @FXML private Label lblUsername;
+    @FXML private Label lblFullname;
+    @FXML private Label lblNumberPhone;
     @FXML
     public void initialize(){
         loadinfo();
     }
     public void loadinfo(){
         User user= Session.getCurrentUser();
-        txtUsername.setText(user.getUsername());
-        txtPassword.setText(user.getPassword());
-        txtFullname.setText(user.getFull_name());
-        txtNumberPhone.setText(user.getPhone_number());
+        lblUsername.setText(user.getUsername());
+        lblFullname.setText(user.getFull_name());
+        lblNumberPhone.setText(user.getPhone_number());
     }
     @FXML
     private void changePass(ActionEvent event) {
