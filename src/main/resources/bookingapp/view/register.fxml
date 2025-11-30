@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
 <!--
   1. Liên kết Controller: fx:controller="bookingapp.controller.RegisterController"
@@ -28,9 +27,8 @@
         <padding>
             <Insets bottom="30" left="40" right="40" top="30" />
         </padding>
-
-        <Text styleClass="logo-text" text="SÂN CẦU LÔNG" />
         <Label styleClass="header-text" text="Tạo Tài Khoản Mới" />
+      <Label text="Vui lòng điền đầy đủ thông tin phía dưới" textFill="#c12a2a" />
 
         <Label styleClass="form-label" text="Tên đăng nhập:" />
         <TextField fx:id="usernameField" promptText="Nhập tên của bạn" />
