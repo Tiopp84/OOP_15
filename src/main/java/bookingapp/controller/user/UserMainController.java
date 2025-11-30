@@ -18,14 +18,22 @@ import java.io.IOException;
 
 public class UserMainController {
 
-    @FXML private BorderPane contentArea;
-    @FXML private Button bt_booking;
-    @FXML private Button bt_pricedetail;
-    @FXML private Button bt_history;
-    @FXML private Button bt_info;
-    @FXML private Button info_court;
-    @FXML private Button bt_logout;
-    @FXML private Label Chaomung;
+    @FXML
+    private BorderPane contentArea;
+    @FXML
+    private Button bt_booking;
+    @FXML
+    private Button bt_pricedetail;
+    @FXML
+    private Button bt_history;
+    @FXML
+    private Button bt_info;
+    @FXML
+    private Button info_court;
+    @FXML
+    private Button bt_logout;
+    @FXML
+    private Label Chaomung;
     private User currentUser;
 
     private static UserMainController mainController;
@@ -40,38 +48,34 @@ public class UserMainController {
         return mainController;
     }
 
-
-
     @FXML
-    public void initialize(){
+    public void initialize() {
         UserMainController.setMainController(this);
         currentUser = Session.getCurrentUser();
-        if(currentUser == null){
+        if (currentUser == null) {
             userdao = new UserDAO();
-            Chaomung.setText("Welcome!");
             currentUser = userdao.validateUser("sang", "123");
             Session.setCurrentUser(currentUser);
         }
-        Chaomung.setText("Chào mừng " + currentUser.getUsername().toUpperCase() + "!");
+        Chaomung.setText("Chào mừng " + currentUser.getFull_name() + "!");
 
         loadContent("maincourt.fxml");
 
-        bt_pricedetail.setOnAction(e->{
+        bt_pricedetail.setOnAction(e -> {
             loadContent("price_detail.fxml");
         });
-        bt_history.setOnAction(e->{
+        bt_history.setOnAction(e -> {
             loadContent("history_booking.fxml");
         });
-        bt_info.setOnAction(e->{
+        bt_info.setOnAction(e -> {
             loadContent("info.fxml");
         });
-        bt_booking.setOnAction(e->{
+        bt_booking.setOnAction(e -> {
             loadContent("maincourt.fxml");
         });
         info_court.setOnAction(e -> {
             loadContent("info_court.fxml");
         });
-
 
         bt_logout.setOnAction(a -> {
             try {
@@ -90,7 +94,6 @@ public class UserMainController {
             e.printStackTrace();
         }
     }
-
 
     /** Hàm tiện ích hiển thị thông báo */
     private void showAlert(String title, String message) {

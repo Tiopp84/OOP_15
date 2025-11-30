@@ -22,7 +22,7 @@ public class AdminMainController {
     public void initialize() {
         // Hiển thị dòng chào mừng dựa trên username từ session
         if (Session.getCurrentUser() != null) {
-            Chaomung.setText("Xin chào " + Session.getCurrentUser().getUsername() + "!");
+            Chaomung.setText("Xin chào " + Session.getCurrentUser().getFull_name() + "!");
         } else {
             Chaomung.setText("Xin chào Admin!");
         }
