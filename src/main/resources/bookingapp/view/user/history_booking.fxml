@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20" style="-fx-background-color: #f9f9f9;" VBox.vgrow="ALWAYS"
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="bookingapp.controller.user.HistoryBooking">
+<VBox spacing="20" style="-fx-background-color: #f9f9f9;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookingapp.controller.user.HistoryBooking">
 
     <padding>
         <Insets bottom="30" left="40" right="40" top="30" />
@@ -15,21 +21,15 @@
 
     <!-- Tiêu đề và nút tìm kiếm trên cùng một dòng -->
     <HBox alignment="CENTER_LEFT" spacing="15">
-        <Label alignment="CENTER"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"
-               text="Lịch sử đăng ký" />
+        <Label alignment="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Lịch sử đăng ký" />
 
-        <Button fx:id="btnToggleSearch" text="🔍 Tìm kiếm"
-                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"
-                onAction="#onToggleSearchPanel" />
+        <Button fx:id="btnToggleSearch" onAction="#onToggleSearchPanel" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;" text="🔍 Tìm kiếm" />
     </HBox>
 
     <!-- Panel tìm kiếm (ban đầu ẩn) -->
-    <VBox fx:id="searchPanel" visible="false" managed="false" spacing="10"
-          style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-background-radius: 8;"
-          VBox.vgrow="NEVER">
+    <VBox fx:id="searchPanel" managed="false" spacing="10" style="-fx-background-color: #ecf0f1; -fx-padding: 15; -fx-background-radius: 8;" visible="false" VBox.vgrow="NEVER">
 
-        <Label text="Tìm kiếm lịch sử đặt sân" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Tìm kiếm lịch sử đặt sân" />
 
         <GridPane hgap="15" vgap="10">
             <columnConstraints>
@@ -37,25 +37,26 @@
                 <ColumnConstraints hgrow="SOMETIMES" />
             </columnConstraints>
 
-            <Label text="Tên Sân:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-            <TextField fx:id="txtTenSan" prefWidth="200" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label text="Tên Sân:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtTenSan" styleClass="text-field" stylesheets="@../../assets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-            <Label text="Ngày Đặt Sân " GridPane.rowIndex="1" GridPane.columnIndex="0" />
-            <DatePicker fx:id="dpDate" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Ngày Đặt Sân " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dpDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
 
         </GridPane>
 
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Tìm kiếm" style="-fx-background-color: #27ae60; -fx-text-fill: white;"
-                    onAction="#onSearch" />
-            <Button text="Làm mới" style="-fx-background-color: #95a5a6;"
-                    onAction="#onResetSearch" />
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button onAction="#onSearch" style="-fx-background-color: #27ae60; -fx-text-fill: white;" text="Tìm kiếm" />
+            <Button onAction="#onResetSearch" style="-fx-background-color: #95a5a6;" text="Làm mới" />
         </HBox>
     </VBox>
 
     <!-- Bảng lịch sử -->
-    <TableView fx:id="tableHistory" prefHeight="400" prefWidth="600"
-               stylesheets="@../../assets/tabel.css" VBox.vgrow="ALWAYS">
+    <TableView fx:id="tableHistory" prefHeight="400" prefWidth="600" stylesheets="@../../assets/tabel.css" VBox.vgrow="ALWAYS">
 
         <columns>
             <TableColumn fx:id="colTenSan" prefWidth="90" text="Tên Sân" />
@@ -63,7 +64,7 @@
             <TableColumn fx:id="colThoiGianBatDau" prefWidth="130" text="Thời Gian Bắt Đầu" />
             <TableColumn fx:id="colThoiGianKetThuc" prefWidth="130" text="Thời Gian Kết Thúc" />
             <TableColumn fx:id="colGiaLucDat" prefWidth="110" text="Giá Lúc Đặt" />
-            <TableColumn fx:id="colThaoTac" text="Thao tác" prefWidth="60" minWidth="60" maxWidth="80" sortable="false" />
+            <TableColumn fx:id="colThaoTac" maxWidth="80" minWidth="60" prefWidth="60" sortable="false" text="Thao tác" />
         </columns>
 
         <columnResizePolicy>

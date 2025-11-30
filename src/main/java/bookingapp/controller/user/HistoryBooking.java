@@ -53,6 +53,7 @@ public class HistoryBooking {
     @FXML
     public void initialize() {
         String namesan = txtTenSan.getText();
+        dpDate.getEditor().setDisable(true);
         LocalDate selectedDate = dpDate.getValue();
         setupDeleteColumn();
         setupTable();

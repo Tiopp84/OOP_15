@@ -13,45 +13,56 @@ import java.util.Locale;
 
 public class BookingManagementController {
 
-    @FXML private TableView<Booking> table;
+    @FXML
+    private TableView<Booking> table;
 
-    @FXML private TableColumn<Booking, Integer> colId;
-    @FXML private TableColumn<Booking, Integer> colUser;
-    @FXML private TableColumn<Booking, Integer> colCourt;
-    @FXML private TableColumn<Booking, String> colDate;
-    @FXML private TableColumn<Booking, String> colStart;
-    @FXML private TableColumn<Booking, String> colEnd;
-    @FXML private TableColumn<Booking, Double> colPrice;
+    @FXML
+    private TableColumn<Booking, Integer> colId;
+    @FXML
+    private TableColumn<Booking, Integer> colUser;
+    @FXML
+    private TableColumn<Booking, Integer> colCourt;
+    @FXML
+    private TableColumn<Booking, String> colDate;
+    @FXML
+    private TableColumn<Booking, String> colStart;
+    @FXML
+    private TableColumn<Booking, String> colEnd;
+    @FXML
+    private TableColumn<Booking, Double> colPrice;
 
-    @FXML private DatePicker dpSearchDate;
-    @FXML private TextField txtSearchUser;
-    @FXML private TextField txtSearchCourt;
+    @FXML
+    private DatePicker dpSearchDate;
+    @FXML
+    private TextField txtSearchUser;
+    @FXML
+    private TextField txtSearchCourt;
 
     private final BookingDAO dao = new BookingDAO();
     private final ObservableList<Booking> list = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getId()));
+        dpSearchDate.getEditor().setDisable(true);
+        colId.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getId()));
 
-        colUser.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getUserId()));
+        colUser.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getUserId()));
 
-        colCourt.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCourtId()));
+        colCourt.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getCourtId()));
 
-        colDate.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getBookingDate()));
+        colDate.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getBookingDate()));
 
-        colStart.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getStartTime()));
+        colStart.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getStartTime()));
 
-        colEnd.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getEndTime()));
+        colEnd.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEndTime()));
 
-        colPrice.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTotalPrice()));
+        colPrice.setCellValueFactory(
+                data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getTotalPrice()));
 
         // Format tiền VND
         NumberFormat vndFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -96,8 +107,10 @@ public class BookingManagementController {
         Integer courtId = null;
 
         try {
-            if (!userText.isEmpty()) userId = Integer.parseInt(userText);
-            if (!courtText.isEmpty()) courtId = Integer.parseInt(courtText);
+            if (!userText.isEmpty())
+                userId = Integer.parseInt(userText);
+            if (!courtText.isEmpty())
+                courtId = Integer.parseInt(courtText);
         } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.WARNING, "User ID hoặc Court ID phải là số").show();
             return;
@@ -117,7 +130,8 @@ public class BookingManagementController {
             if (date != null && !b.getBookingDate().equals(date.toString()))
                 match = false;
 
-            if (match) filtered.add(b);
+            if (match)
+                filtered.add(b);
         }
 
         table.setItems(filtered);
