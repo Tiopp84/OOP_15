@@ -4,8 +4,9 @@ import bookingapp.dao.UserDAO;
 import bookingapp.model.User;
 import bookingapp.util.Session;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import bookingapp.util.showAlert;
+
 public class UpdateInfo {
     @FXML
     private TextField txtFullname;
@@ -29,10 +30,17 @@ public class UpdateInfo {
             currentUser.setFull_name(fullname);
             currentUser.setPhone_number(phone);
             Session.setCurrentUser(currentUser);
-            showAlert.showAlert("Thông báo","Thay đổi thông tin tài khoản thành công");
+            showAlert("Thông báo","Thay đổi thông tin tài khoản thành công");
         }
         else {
-            showAlert.showAlert("Thông báo","Thay đổi thông tin tài khoản không thành công");
+            showAlert("Thông báo","Thay đổi thông tin tài khoản không thành công");
         }
+    }
+    public static void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

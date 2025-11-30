@@ -17,8 +17,6 @@ import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
-import static bookingapp.util.showAlert.showAlert;
-
 public class ChangePassword {
 //    @FXML
 //    private TextField oldPassword;
@@ -67,6 +65,13 @@ public class ChangePassword {
         } else {
             alert.setContentText("Đổi mật khẩu thất bại.");
         }
+        alert.showAndWait();
+    }
+    public static void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }
