@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity"  xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Địa chỉ sân:">
+      <Label text="ĐỊA CHỈ SÂN: Hà Đông - Hà Nội" VBox.vgrow="ALWAYS">
          <padding>
             <Insets bottom="15.0" />
          </padding>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="10.0" layoutY="66.0" text="Liên hệ chủ sân:">
+      <Label layoutX="10.0" layoutY="66.0" text="SĐT: 0123456789" VBox.vgrow="ALWAYS">
          <padding>
             <Insets bottom="15.0" />
          </padding>
+         <font>
+            <Font size="20.0" />
+         </font>
       </Label>
-      <Label layoutX="10.0" layoutY="84.0" text="Label">
+      <Label layoutX="10.0" layoutY="84.0" text="EMAIL: example@gmail.com" VBox.vgrow="ALWAYS">
          <padding>
             <Insets bottom="15.0" />
          </padding>
+         <font>
+            <Font size="20.0" />
+         </font>
       </Label>
    </children>
    <padding>

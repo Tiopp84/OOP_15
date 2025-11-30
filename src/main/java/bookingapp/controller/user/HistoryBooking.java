@@ -15,20 +15,22 @@ public class HistoryBooking {
     @FXML
     private TableView<Booking> tableHistory;
     @FXML
-    private TableColumn<Booking,String> colTenSan;
+    private TableColumn<Booking, String> colTenSan;
     @FXML
-    private TableColumn<Booking,String> colNgay;
+    private TableColumn<Booking, String> colNgay;
     @FXML
-    private TableColumn<Booking,String> colThoiGianBatDau;
+    private TableColumn<Booking, String> colThoiGianBatDau;
     @FXML
-    private TableColumn<Booking,String> colThoiGianKetThuc;
+    private TableColumn<Booking, String> colThoiGianKetThuc;
     @FXML
-    private TableColumn<Booking,Double> colGiaLucDat;
+    private TableColumn<Booking, String> colGiaLucDat;
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         setupTable();
         loadBooking();
     }
+
     private void setupTable() {
 
         // Căn giữa các cột
@@ -39,39 +41,27 @@ public class HistoryBooking {
         colGiaLucDat.setStyle("-fx-alignment: CENTER;");
 
         // Tên sân
-        colTenSan.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getCourtName() == null ? "" : data.getValue().getCourtName()
-                )
-        );
+        colTenSan.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getCourtName() == null ? "" : data.getValue().getCourtName()));
 
         // Ngày đặt (LocalDate → String)
-        colNgay.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getBookingDate() == null ? "" : data.getValue().getBookingDate()
-                )
-        );
+        colNgay.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getBookingDate() == null ? "" : data.getValue().getBookingDate()));
 
         // Thời gian bắt đầu
-        colThoiGianBatDau.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getStartTime() == null ? "" : data.getValue().getStartTime()
-                )
-        );
+        colThoiGianBatDau.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getStartTime() == null ? "" : data.getValue().getStartTime()));
 
         // Thời gian kết thúc
-        colThoiGianKetThuc.setCellValueFactory(data ->
-                new SimpleStringProperty(
-                        data.getValue().getEndTime() == null ? "" : data.getValue().getEndTime()
-                )
-        );
+        colThoiGianKetThuc.setCellValueFactory(data -> new SimpleStringProperty(
+                data.getValue().getEndTime() == null ? "" : data.getValue().getEndTime()));
 
         // Giá lúc đặt (Double)
-        colGiaLucDat.setCellValueFactory(data ->
-                new SimpleDoubleProperty(data.getValue().getTotalPrice()).asObject()
-        );
+        colGiaLucDat.setCellValueFactory(
+                data -> new SimpleStringProperty(String.format("%.0f VND", data.getValue().getTotalPrice())));
     }
-    private void loadBooking(){
+
+    private void loadBooking() {
         BookingDAO booking = new BookingDAO();
         List<Booking> bookingList = booking.loadBooking();
         tableHistory.getItems().clear();
