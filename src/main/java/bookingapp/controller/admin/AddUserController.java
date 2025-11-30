@@ -7,11 +7,16 @@ import javafx.stage.Stage;
 
 public class AddUserController {
 
-    @FXML private TextField txtUsername;
-    @FXML private TextField txtFullName;
-    @FXML private TextField txtPhone;
-    @FXML private PasswordField txtPassword;
-    @FXML private ComboBox<String> cbRole;
+    @FXML
+    private TextField txtUsername;
+    @FXML
+    private TextField txtFullName;
+    @FXML
+    private TextField txtPhone;
+    @FXML
+    private PasswordField txtPassword;
+    @FXML
+    private ComboBox<String> cbRole;
 
     private UserDAO userDAO = new UserDAO();
 
