@@ -155,10 +155,15 @@ public class Court1 {
             }
             return;
         }
+        // for (int h = 0; h < 6; h++) {
+        // Button btn = hourToButton(h);
+        // btn.setDisable(true);
+        // btn.setStyle("-fx-background-color: #A8A8A8;");
+        // }
         // Load LichDatNgoaiLe
         for (int h = 0; h < 24; h++) {
             Button btn = hourToButton(h);
-            if (LichNgoaiLe.containsKey(h)) {
+            if (LichNgoaiLe.containsKey(h) && !btn.isDisable()) {
                 btn.setDisable(true);
                 btn.setStyle("-fx-background-color: #A8A8A8;");
             } else {
@@ -172,7 +177,7 @@ public class Court1 {
                 continue;
             Button btn = hourToButton(h);
 
-            if (LichDat.containsKey(h)) {
+            if (LichDat.containsKey(h) && !btn.isDisable()) {
                 btn.setDisable(true);
                 btn.setStyle("-fx-background-color: #FF6D6D;");
             } else {
