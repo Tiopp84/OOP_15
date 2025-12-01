@@ -155,6 +155,11 @@ public class Court3 {
             }
             return;
         }
+        // for (int h = 0; h < 6; h++) {
+        // Button btn = hourToButton(h);
+        // btn.setDisable(true);
+        // btn.setStyle("-fx-background-color: #A8A8A8;");
+        // }
         // Load LichDatNgoaiLe
         for (int h = 0; h < 24; h++) {
             Button btn = hourToButton(h);

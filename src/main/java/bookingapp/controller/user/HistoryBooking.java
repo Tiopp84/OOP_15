@@ -43,7 +43,7 @@ public class HistoryBooking {
     @FXML
     private TableColumn<Booking, String> colThoiGianKetThuc;
     @FXML
-    private TableColumn<Booking, Double> colGiaLucDat;
+    private TableColumn<Booking, String> colGiaLucDat;
     // FXML load nut xoa
     @FXML
     private TableColumn<Booking, Void> colThaoTac;
@@ -183,7 +183,8 @@ public class HistoryBooking {
                 data.getValue().getEndTime() == null ? "" : data.getValue().getEndTime()));
 
         // Giá lúc đặt (Double)
-        colGiaLucDat.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().getTotalPrice()).asObject());
+        colGiaLucDat.setCellValueFactory(data -> new SimpleStringProperty(String.format("%.0f VND",
+                data.getValue().getTotalPrice())));
     }
 
     public void loadBooking(String name, LocalDate selectedDate) {
