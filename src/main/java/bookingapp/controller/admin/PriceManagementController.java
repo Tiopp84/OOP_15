@@ -2,6 +2,7 @@ package bookingapp.controller.admin;
 
 import bookingapp.dao.PriceTableDAO;
 import bookingapp.model.PriceTable;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,23 +14,49 @@ import java.util.Optional;
 
 public class PriceManagementController {
 
-    @FXML private TableView<PriceTable> table;
-    @FXML private TableColumn<PriceTable, Integer> colId;
-    @FXML private TableColumn<PriceTable, Integer> colStart_day;
-    @FXML private TableColumn<PriceTable, Integer> colEnd_day;
-    @FXML private TableColumn<PriceTable, String> colStart;
-    @FXML private TableColumn<PriceTable, String> colEnd;
-    @FXML private TableColumn<PriceTable, String> colPrice; // đổi sang String
+    @FXML
+    private TableView<PriceTable> table;
+    @FXML
+    private TableColumn<PriceTable, Integer> colId;
+    @FXML
+    private TableColumn<PriceTable, String> colStart_day;
+    @FXML
+    private TableColumn<PriceTable, String> colEnd_day;
+    @FXML
+    private TableColumn<PriceTable, String> colStart;
+    @FXML
+    private TableColumn<PriceTable, String> colEnd;
+    @FXML
+    private TableColumn<PriceTable, String> colPrice; // đổi sang String
 
     private PriceTableDAO dao = new PriceTableDAO();
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getId()).asObject());
-        colStart_day.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getStart_day_in_week()).asObject());
-        colEnd_day.setCellValueFactory(p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getEnd_day_in_week()).asObject());
-        colStart.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getStart_time().toString()));
-        colEnd.setCellValueFactory(p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getEnd_time().toString()));
+        colId.setCellValueFactory(
+                p -> new javafx.beans.property.SimpleIntegerProperty(p.getValue().getId()).asObject());
+        colStart_day.setCellValueFactory(p -> {
+            int dayValue = p.getValue().getStart_day_in_week();
+            String day_in_week;
+            if (dayValue != 8) {
+                day_in_week = String.format("T%d", dayValue);
+            } else
+                day_in_week = "CN";
+            return new SimpleStringProperty(day_in_week);
+        });
+        colEnd_day.setCellValueFactory(p -> {
+            int dayValue = p.getValue().getEnd_day_in_week();
+            String day_in_week;
+            if (dayValue != 8) {
+                day_in_week = String.format("T%d", dayValue);
+            } else
+                day_in_week = "CN";
+            return new SimpleStringProperty(day_in_week);
+        });
+        colStart.setCellValueFactory(
+                p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getStart_time().toString()));
+        colEnd.setCellValueFactory(
+                p -> new javafx.beans.property.SimpleStringProperty(p.getValue().getEnd_time().toString()));
 
         // ⭐ Format tiền VND
         colPrice.setCellValueFactory(p -> {
@@ -53,7 +80,8 @@ public class PriceManagementController {
         dialog.setContentText("VD: 2,6,08:00,10:00,100000");
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isEmpty()) return;
+        if (result.isEmpty())
+            return;
 
         String[] parts = result.get().split(",");
         if (parts.length != 5) {
@@ -67,8 +95,7 @@ public class PriceManagementController {
                     Integer.parseInt(parts[1].trim()),
                     LocalTime.parse(parts[2].trim()),
                     LocalTime.parse(parts[3].trim()),
-                    Float.parseFloat(parts[4].trim())
-            );
+                    Float.parseFloat(parts[4].trim()));
 
             if (ok) {
                 showAlert("Thêm thành công!", Alert.AlertType.INFORMATION);
