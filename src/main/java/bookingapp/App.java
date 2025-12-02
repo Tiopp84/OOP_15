@@ -24,11 +24,10 @@ public class App extends Application {
             return;
         }
 
-
         FXMLLoader fxmlLoader = new FXMLLoader(
-                //App.class.getResource("/bookingapp/view/welcome.fxml")
-                App.class.getResource("/bookingapp/view/user/mainLayout.fxml")
-                //App.class.getResource("/bookingapp/view/admin/adminmainWindow.fxml")
+                App.class.getResource("/bookingapp/view/welcome.fxml")
+        // App.class.getResource("/bookingapp/view/user/mainLayout.fxml")
+        // App.class.getResource("/bookingapp/view/admin/adminmainWindow.fxml")
         );
 
         Parent root = fxmlLoader.load();
@@ -36,8 +35,7 @@ public class App extends Application {
         scene = new Scene(root, 600, 500);
 
         stage.getIcons().add(
-                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png"))
-        );
+                new javafx.scene.image.Image(App.class.getResourceAsStream("/bookingapp/assets/images/icon.png")));
 
         try {
             String css = App.class.getResource("/bookingapp/assets/style.css").toExternalForm();
@@ -54,7 +52,6 @@ public class App extends Application {
         stage.show();
     }
 
-
     public static void setRoot(String fxml) throws IOException {
         String fxmlPath = "/bookingapp/view/" + fxml;
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlPath));
@@ -67,4 +64,3 @@ public class App extends Application {
         launch();
     }
 }
-

@@ -18,24 +18,25 @@ import javafx.scene.control.Alert;
 import java.io.IOException;
 
 public class ChangePassword {
-//    @FXML
-//    private TextField oldPassword;
+    // @FXML
+    // private TextField oldPassword;
     @FXML
     private TextField newPassword;
     @FXML
     private TextField newConfirmPassword;
 
-    private Info parentInfoController;  // Tham chiếu tới controller cha
+    private Info parentInfoController; // Tham chiếu tới controller cha
 
     // Phương thức này sẽ được gọi từ Info controller trước khi mở cửa sổ
-    public void setParentController(Info parentInfoController) {
-        this.parentInfoController = parentInfoController;
+    public void setParentController(Info parent) {
+        this.parentInfoController = parent;
     }
+
     @FXML
-    public void handleChangePassword(ActionEvent event){
+    public void handleChangePassword(ActionEvent event) {
         User currentUser = Session.getCurrentUser();
         Integer user_id = Session.getCurrentUser().getId();
-//        String oldPass = oldPassword.getText();
+        // String oldPass = oldPassword.getText();
         String newPass = newPassword.getText();
         String newConfirmPass = newConfirmPassword.getText();
         if (!newPass.equals(newConfirmPass)) {
@@ -47,17 +48,17 @@ public class ChangePassword {
             showAlert("Lỗi", "Mật khẩu mới phải ít nhất 2 ký tự!");
             return;
         }
-        UserDAO dao=new UserDAO();
-        boolean success=dao.changePassword2(user_id, newPass);
+        UserDAO dao = new UserDAO();
+        boolean success = dao.changePassword2(user_id, newPass);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Thông báo");
         alert.setHeaderText(null);
         if (success) {
-            //dổi luôn thông tin khi thoái khỏi cửa sổ dổi mật khẩu
+            // dổi luôn thông tin khi thoái khỏi cửa sổ dổi mật khẩu
             currentUser.setPassword(newPass);
             Session.setCurrentUser(currentUser);
             if (parentInfoController != null) {
-                parentInfoController.loadinfo();  // Cập nhật ngay txtPassword
+                parentInfoController.loadinfo(); // Cập nhật ngay txtPassword
             }
             alert.setContentText("Đổi mật khẩu thành công");
             Stage stage = (Stage) newPassword.getScene().getWindow();
@@ -67,6 +68,7 @@ public class ChangePassword {
         }
         alert.showAndWait();
     }
+
     public static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
