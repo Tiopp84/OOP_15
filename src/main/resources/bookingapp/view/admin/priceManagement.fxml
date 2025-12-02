@@ -17,8 +17,8 @@
     <TableView fx:id="table" prefHeight="300">
         <columns>
             <TableColumn fx:id="colId" text="Mã" prefWidth="60"/>
-            <TableColumn fx:id="colStart_day" text="Ngày Bắt Đầu" prefWidth="120"/>
-            <TableColumn fx:id="colEnd_day" text="Ngày Kết Thúc" prefWidth="120"/>
+            <TableColumn fx:id="colStart_day" text="Từ" prefWidth="120"/>
+            <TableColumn fx:id="colEnd_day" text="Đến" prefWidth="120"/>
             <TableColumn fx:id="colStart" text="Bắt đầu" prefWidth="120"/>
             <TableColumn fx:id="colEnd" text="Kết thúc" prefWidth="120"/>
             <TableColumn fx:id="colPrice" text="Giá/giờ" prefWidth="120"/>
